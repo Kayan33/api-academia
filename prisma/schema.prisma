@@ -18,7 +18,7 @@ model personal {
   id String @id @default(uuid())
   nome String
   telefone String
-  email String
+  email String @unique
   CREF String
   sexo String
   senha String
