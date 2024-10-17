@@ -24,5 +24,5 @@ model personal {
   senha String
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
-  @@map("cadastrar_personal")
+  @@map("PersonalServices")
 }
