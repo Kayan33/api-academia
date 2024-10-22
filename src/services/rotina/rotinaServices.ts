@@ -1,21 +1,17 @@
 import prismaClient from "../prisma";
 
 interface Rotina {
-  repeticao: string
+  dia_semana: string
   descricao : string
-  descanso: string
-  series : string
   id_exercicio : string
 }
 
 class RotinaServices{
- async cadastar_Rotina ({repeticao, descricao,descanso,series,id_exercicio}:Rotina){
+ async cadastar_Rotina ({dia_semana,descricao,id_exercicio}:Rotina){
   const cadastrar = await prismaClient.rotina.create({
     data:{
-      repeticao,
+      dia_semana,
        descricao,
-       descanso,
-       series,
        id_exercicio
     },
     include:{
