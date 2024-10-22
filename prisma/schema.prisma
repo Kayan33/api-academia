@@ -41,13 +41,23 @@ model personal {
 model treino {
   id String @id @default(uuid()) 
   nome_treino String
+  dia_semana String
+  descricao String
+  rotina rotina @relation(fields: [id_rotina], references: [id]) 
+  id_rotina String
+  @@map("treino")
+}
+
+model rotina {
+  id String @id @default(uuid()) 
+  repeticao String
   descricao String
   descanso String
   series String
-  repeticao String
-  exercicio exercicio @relation(fields: [id_exercicio], references: [id])
+  exercicio exercicio @relation(fields: [id_exercicio], references: [id]) 
   id_exercicio String
-  @@map("treino")
+  treinos treino[] 
+  @@map("rotina")
 }
 
 model exercicio {
@@ -55,6 +65,6 @@ model exercicio {
   nome_exercicio String
   descricao String
   URL_video String
-  treino treino []
-    @@map("exercicio")
+  rotinas rotina[] 
+  @@map("exercicio")
 }
