@@ -2,26 +2,22 @@ import prismaClient from "../prisma";
 
 interface Treino {
   nome_treino: string;
+  dia_semana: string;
   descricao: string;
-  descanso: string;
-  series: string;
-  repeticao: string;
-  id_exercicio: string;
+  id_rotina: string;
 }
 
 class TreinoServices {
-  async cadastrar_personal({ nome_treino, descricao, descanso, series, repeticao,id_exercicio }: Treino) {
+  async cadastrar_personal({ nome_treino, dia_semana, descricao,id_rotina }: Treino) {
     const cadastrar = await prismaClient.treino.create({
       data: {
         nome_treino,
+        dia_semana,
         descricao,
-        descanso,
-        series,
-        repeticao,
-        id_exercicio
+        id_rotina
       },
       include:{
-        exercicio:true
+        rotina:true
       }
     })
     return cadastrar
@@ -30,7 +26,8 @@ class TreinoServices {
   async getAllTreino() {
     const ver = await prismaClient.treino.findMany({
       include: {
-        exercicio: true, 
+        rotina: true, 
+        
       }
     });
     return ver;
