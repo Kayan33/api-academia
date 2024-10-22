@@ -13,13 +13,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model aluno {
+  id String @id @default(uuid())
+  nome String
+  telefone String
+  email String  @unique
+  endereco String
+  data_nascimento String
+  status Int
+  data_inscricao DateTime @default(now()) 
+  @@map("aluno")
+}
 
 model personal {
   id String @id @default(uuid())
   nome String
   telefone String
   email String @unique
-  CREF String
+  CREF String @unique
   sexo String
   senha String
   create_at DateTime? @default(now())
