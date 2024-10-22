@@ -13,58 +13,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model aluno {
-  id String @id @default(uuid())
-  nome String
-  telefone String
-  email String  @unique
-  endereco String
+model Aluno {
+  id              String   @id @default(uuid())
+  nome            String
+  telefone        String
+  email           String   @unique
+  endereco        String
   data_nascimento String
-  status Int
-  data_inscricao DateTime @default(now()) 
+  status          Int
+  data_inscricao  DateTime @default(now()) 
   @@map("aluno")
 }
 
-model personal {
-  id String @id @default(uuid())
-  nome String
-  telefone String
-  email String @unique
-  CREF String @unique
-  sexo String
-  senha String
-  create_at DateTime? @default(now())
-  update_at DateTime? @default(now())
+model Personal {
+  id         String   @id @default(uuid())
+  nome       String
+  telefone   String
+  email      String   @unique
+  CREF       String   @unique
+  sexo       String
+  senha      String
+  create_at  DateTime? @default(now())
+  update_at  DateTime? @default(now())
   @@map("Personal")
 }
 
-model treino {
-  id String @id @default(uuid()) 
+model Treino {
+  id          String   @id @default(uuid())
   nome_treino String
-  dia_semana String
-  descricao String
-  rotina rotina @relation(fields: [id_rotina], references: [id]) 
-  id_rotina String
-  @@map("treino")
+  repeticao   String
+  descanso     String
+  series      String
+  rotinas     Rotina[] @relation("TreinoRotina") 
 }
 
-model rotina {
-  id String @id @default(uuid()) 
-  repeticao String
-  descricao String
-  descanso String
-  series String
-  exercicio exercicio @relation(fields: [id_exercicio], references: [id]) 
+model Rotina {
+  id          String   @id @default(uuid())
+  dia_semana  String
+  descricao   String
+  treinos     Treino[] @relation("TreinoRotina") 
+  exercicio   Exercicio @relation(fields: [id_exercicio], references: [id]) 
   id_exercicio String
-  treinos treino[] 
-  @@map("rotina")
 }
 
-model exercicio {
-  id String @id @default(uuid())
+model Exercicio {
+  id             String    @id @default(uuid())
   nome_exercicio String
-  descricao String
-  URL_video String
-  rotinas rotina[] 
+  descricao      String
+  URL_video      String
+  rotinas        Rotina[] 
   @@map("exercicio")
 }
