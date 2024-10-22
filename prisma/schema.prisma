@@ -24,5 +24,26 @@ model personal {
   senha String
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
-  @@map("PersonalServices")
+  @@map("Personal")
+}
+
+model treino {
+  id String @id @default(uuid()) 
+  nome_treino String
+  descricao String
+  descanso String
+  series String
+  repeticao String
+  exercicio exercicio @relation(fields: [id_exercicio], references: [id])
+  id_exercicio String
+  @@map("treino")
+}
+
+model exercicio {
+  id String @id @default(uuid())
+  nome_exercicio String
+  descricao String
+  URL_video String
+  treino treino []
+    @@map("exercicio")
 }
