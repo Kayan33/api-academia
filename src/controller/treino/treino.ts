@@ -1,17 +1,15 @@
-import { request, Request, response, Response } from "express";
+import { Request,  Response } from "express";
 import TreinoServices from "../../services/treino/treinoservices";
 
 class TreinoController{
   async cadastro_Treino(req:Request, res:Response){
-    const {nome_treino,descricao,descanso,series,repeticao,id_exercicio} = req.body
+    const {nome_treino,dia_semana,descricao,id_rotina} = req.body
     const treinoServices = new TreinoServices()
     const resposta = await treinoServices.cadastrar_personal({
       nome_treino,
+      dia_semana,
       descricao,
-      descanso,
-      series,
-      repeticao,
-      id_exercicio
+      id_rotina
     })
     return res.json(resposta)
 
