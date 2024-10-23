@@ -3,13 +3,10 @@ import TreinoServices from "../../services/treino/treinoservices";
 
 class TreinoController{
   async cadastro_Treino(req:Request, res:Response){
-    const {nome_treino,repeticao,descanso,series,rotinas} = req.body
+    const {nome_treino,rotinas} = req.body
     const treinoServices = new TreinoServices()
     const resposta = await treinoServices.cadastrar_Treinos({
       nome_treino,
-        repeticao,
-        descanso,
-        series,
         rotinas
     })
     return res.json(resposta)
