@@ -52,8 +52,7 @@ model Rotina {
   dia_semana  String
   descricao   String
   treinos     Treino[] @relation("TreinoRotina") 
-  exercicio   Exercicio @relation(fields: [id_exercicio], references: [id]) 
-  id_exercicio String
+  exercicio     Exercicio[] @relation("exercicioRotina") 
 }
 
 model Exercicio {
@@ -61,6 +60,6 @@ model Exercicio {
   nome_exercicio String
   descricao      String
   URL_video      String
-  rotinas        Rotina[] 
+   rotina     Rotina[] @relation("exercicioRotina") 
   @@map("exercicio")
 }
