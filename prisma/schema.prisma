@@ -35,22 +35,20 @@ model Personal {
   senha      String
   create_at  DateTime? @default(now())
   update_at  DateTime? @default(now())
-  @@map("Personal")
+  @@map("personal")
 }
 
 model Treino {
   id          String   @id @default(uuid())
   nome_treino String
-  repeticao   String
-  descanso     String
-  series      String
   rotinas     Rotina[] @relation("TreinoRotina") 
 }
 
 model Rotina {
   id          String   @id @default(uuid())
-  dia_semana  String
-  descricao   String
+  repeticao   String
+  descanso     String
+  series      String
   treinos     Treino[] @relation("TreinoRotina") 
   exercicio     Exercicio[] @relation("exercicioRotina") 
 }
@@ -58,8 +56,17 @@ model Rotina {
 model Exercicio {
   id             String    @id @default(uuid())
   nome_exercicio String
-  descricao      String
   URL_video      String
-   rotina     Rotina[] @relation("exercicioRotina") 
+  rotina     Rotina[] @relation("exercicioRotina") 
+  categoria Categoria @relation(fields: [categoriaID], references: [id])
+  categoriaID String
   @@map("exercicio")
+}
+
+model Categoria{
+  id String @id @default(uuid())
+  categoria String
+  exercicios Exercicio[]
+
+   @@map("categoria")
 }
