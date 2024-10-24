@@ -22,6 +22,8 @@ model Aluno {
   data_nascimento String
   status          Int
   data_inscricao  DateTime @default(now()) 
+  personal Personal @relation(fields: [personalID], references: [id])
+  personalID String
   @@map("aluno")
 }
 
@@ -33,6 +35,7 @@ model Personal {
   CREF       String   @unique
   sexo       String
   senha      String
+  aluno Aluno[]
   create_at  DateTime? @default(now())
   update_at  DateTime? @default(now())
   @@map("personal")

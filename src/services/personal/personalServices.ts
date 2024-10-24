@@ -7,10 +7,11 @@ interface Personal {
   CREF: string,
   sexo: string,
   senha: string
+  aluno: string[]
 }
 class PersonalServices {
 
-  async cadastrar_personal({ nome, telefone, email, CREF, sexo, senha }: Personal) {
+  async cadastrar_personal({ nome, telefone, email, CREF, sexo, senha,aluno }: Personal) {
     const cadastrar = await prismaClient.personal.create({
       data: {
         nome,
@@ -18,7 +19,12 @@ class PersonalServices {
         email,
         CREF,
         sexo,
-        senha
+        senha,
+        aluno:{
+          connect:aluno.map(id=>({id}))
+        }
+      },include:{
+        aluno:true
       }
     })
     return cadastrar
@@ -26,14 +32,8 @@ class PersonalServices {
 
   async getAllPersonalTrainers() {
     const ver = await prismaClient.personal.findMany({
-      select: {
-        id: true,
-        nome:true,
-        telefone:true,
-        email:true,
-        CREF:true,
-        sexo:true,
-        senha:true,
+      include:{
+        aluno:true
       }
     })
     return ver
