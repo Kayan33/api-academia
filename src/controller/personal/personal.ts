@@ -4,10 +4,10 @@ import { PersonalServices } from "../../services/personal/personalServices";
 
 class PersonalController {
     async cadastro_Personal(req:Request, res:Response){
-        const {nome,telefone,email,CREF,sexo,senha,aluno} = req.body;
+        const {nome,telefone,email,CREF,sexo,senha,alunoId} = req.body;
         const personalServices = new PersonalServices()
         const resposta = await personalServices.cadastrar_personal({
-            nome,telefone,email,CREF,sexo,senha,aluno
+            nome,telefone,email,CREF,sexo,senha,alunoId
         })
         return res.json(resposta)
     }

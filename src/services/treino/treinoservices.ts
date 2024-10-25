@@ -2,16 +2,16 @@ import prismaClient from "../prisma";
 
 interface Treino {
   nome_treino: string,
-  rotinas: string[]
+  rotinasID: string[]
 }
 
 class TreinoServices {
-  async cadastrar_Treinos({ nome_treino, rotinas }: Treino) {
+  async cadastrar_Treinos({ nome_treino, rotinasID }: Treino) {
     const cadastrar = await prismaClient.treino.create({
       data: {
         nome_treino,
         rotinas: {
-          connect: rotinas.map(id => ({ id })),
+          connect: rotinasID.map(id => ({ id })),
         },
       },
       include: {

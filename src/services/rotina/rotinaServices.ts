@@ -4,18 +4,18 @@ interface Rotina {
   repeticao: string
   descanso: string
   series: string
-  exercicio: string[]
+  exercicioID: string[]
 }
 
 class RotinaServices {
-  async cadastar_Rotina({ repeticao, descanso, series, exercicio }: Rotina) {
+  async cadastar_Rotina({ repeticao, descanso, series, exercicioID }: Rotina) {
     const cadastrar = await prismaClient.rotina.create({
       data: {
         repeticao,
         descanso,
         series,
         exercicio: {
-          connect: exercicio.map(id => ({ id }))
+          connect: exercicioID.map(id => ({ id }))
         }
       },
       include: {
