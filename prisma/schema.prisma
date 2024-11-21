@@ -20,56 +20,60 @@ model Aluno {
   email           String   @unique
   endereco        String
   data_nascimento String
+  senha           String
   status          Int
-  data_inscricao  DateTime @default(now()) 
-  personal Personal @relation(fields: [personalID], references: [id])
-  personalID String
+  data_inscricao  DateTime @default(now())
+  personal        Personal @relation(fields: [personalID], references: [id])
+  personalID      String
+
   @@map("aluno")
 }
 
 model Personal {
-  id         String   @id @default(uuid())
-  nome       String
-  telefone   String
-  email      String   @unique
-  CREF       String   @unique
-  sexo       String
-  senha      String
-  aluno Aluno[]
-  create_at  DateTime? @default(now())
-  update_at  DateTime? @default(now())
+  id        String    @id @default(uuid())
+  nome      String
+  telefone  String
+  email     String    @unique
+  CREF      String    @unique
+  sexo      String
+  senha     String
+  aluno     Aluno[]
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
   @@map("personal")
 }
 
 model Treino {
   id          String   @id @default(uuid())
   nome_treino String
-  rotinas     Rotina[] @relation("TreinoRotina") 
+  rotinas     Rotina[] @relation("TreinoRotina")
 }
 
 model Rotina {
-  id          String   @id @default(uuid())
-  repeticao   String
-  descanso     String
-  series      String
-  treinos     Treino[] @relation("TreinoRotina") 
-  exercicio     Exercicio[] @relation("exercicioRotina") 
+  id        String      @id @default(uuid())
+  repeticao String
+  descanso  String
+  series    String
+  treinos   Treino[]    @relation("TreinoRotina")
+  exercicio Exercicio[] @relation("exercicioRotina")
 }
 
 model Exercicio {
   id             String    @id @default(uuid())
   nome_exercicio String
   URL_video      String
-  rotina     Rotina[] @relation("exercicioRotina") 
-  categoria Categoria @relation(fields: [categoriaID], references: [id])
-  categoriaID String
+  rotina         Rotina[]  @relation("exercicioRotina")
+  categoria      Categoria @relation(fields: [categoriaID], references: [id])
+  categoriaID    String
+
   @@map("exercicio")
 }
 
-model Categoria{
-  id String @id @default(uuid())
-  categoria String
+model Categoria {
+  id         String      @id @default(uuid())
+  categoria  String
   exercicios Exercicio[]
 
-   @@map("categoria")
+  @@map("categoria")
 }

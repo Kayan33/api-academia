@@ -4,7 +4,7 @@ import AlunoServises from "../../services/aluno/alunoServices";
 
 class AlunoController {
  async cadastro_Aluno (req:Request, res:Response){
-  const {nome,telefone,email,endereco,data_nascimento,status,personalID}= req.body
+  const {nome,telefone,email,endereco,data_nascimento,senha,status,personalID}= req.body
   const alunoServices = new AlunoServises()
   const resposta =  await alunoServices.Cadastar_Aluno({
     nome,
@@ -12,6 +12,7 @@ class AlunoController {
     email,
     endereco,
     data_nascimento,
+    senha,
     status,
     personalID
   })
