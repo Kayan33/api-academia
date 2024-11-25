@@ -8,17 +8,20 @@ interface login {
 }
 
 class LoginServices {
-    async loginUsuarios({ email, senha }: login) {
+    async loginAluno({ email, senha }: login) {
         const aluno = await prismaClient.aluno.findFirst({
             where: {
                 email
             }
         })
-        if (!aluno) {
+
+      
+
+        if (!aluno  ) {
             throw new Error("Usuario ou senha Invalido");
         }
 
-        const senhaCrypt = await compare(senha, aluno.senha)
+        const senhaCrypt = await compare(senha, aluno.senha, )
         if (!senhaCrypt) {
             throw new Error("Usuario ou senha Invalido");
 
@@ -29,7 +32,7 @@ class LoginServices {
             nome: aluno.nome,
             email: aluno.email
         },
-            process.env.JWT_SECRETO,
+            process.env.JWT_SECRETO as string,
             {
                 subject: aluno.id,
                 expiresIn: '8h'
@@ -40,6 +43,29 @@ class LoginServices {
             email: aluno.email,
             token: token
         }
+    }   
+
+    async verificaToken(id: string){
+
+        const aluno = await prismaClient.aluno.findUnique({
+
+            where:{
+
+                id: id
+            },
+
+             select:{
+
+                id: true
+            }
+        });
+
+        if(!aluno){
+
+            throw new Error('Usuário ou senha incorretos!')
+        }
+
+        return aluno;
     }
 }
 

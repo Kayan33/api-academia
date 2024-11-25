@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import prismaClient from "../prisma";
 
 interface Personal {
@@ -12,22 +13,22 @@ interface Personal {
 
 class PersonalServices {
   async cadastrar_personal({ nome, telefone, email, CREF, sexo, senha, alunoId}: Personal) {
+    
+    const senhaCrypt = await hash(senha, 8)
     const cadastrar = await prismaClient.personal.create({
       data: {
         nome,
         telefone,
         email,
         CREF,
-        sexo,
+        sexo:senhaCrypt,
         senha,
         
-        aluno: {
-          connect: alunoId.map(id => ({ id })) 
-        }
+        aluno: alunoId.length > 0 ? { connect: alunoId.map(id => ({ id })) } : undefined,
       },
       include: {
-        aluno: true 
-      }
+        aluno: true,
+      },
     });
     return cadastrar;
   }
