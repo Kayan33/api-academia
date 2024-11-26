@@ -14,7 +14,7 @@ class loginController {
 
     async verificaToken(req: Request, res: Response) {
         const id = req.alunoID
-        const loginServices = new LoginServices
+        const loginServices = new LoginServices ()
         const resposta = await loginServices.verificaToken(id)
         return res.json(resposta)
     }

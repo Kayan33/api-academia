@@ -18,5 +18,11 @@ class AlunoController {
   })
 return res.json(resposta)
  }
+
+ async get_Aluno(req:Request, res:Response){
+  const alunoServices = new AlunoServises()
+  const resposta = await alunoServices.getAllAluno()
+  return res.json(resposta)
+ }
 }
 export default AlunoController
