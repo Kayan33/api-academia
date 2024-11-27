@@ -21,8 +21,8 @@ class PersonalServices {
         telefone,
         email,
         CREF,
-        sexo:senhaCrypt,
-        senha,
+        sexo,
+        senha:senhaCrypt,
         
         aluno: alunoId.length > 0 ? { connect: alunoId.map(id => ({ id })) } : undefined,
       },

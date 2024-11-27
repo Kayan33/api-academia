@@ -2,71 +2,73 @@ import { compare } from "bcryptjs";
 import prismaClient from "../prisma";
 import { sign } from "jsonwebtoken";
 
-interface login {
-    email: string
-    senha: string
+interface Login {
+    email: string;
+    senha: string;
 }
 
 class LoginServices {
-    async loginAluno({ email, senha }: login) {
-        const aluno = await prismaClient.aluno.findFirst({
-            where: {
-                email
-            }
-        })
-
-      
-
-        if (!aluno  ) {
-            throw new Error("Usuario ou senha Invalido");
-        }
-
-        const senhaCrypt = await compare(senha, aluno.senha, )
-        if (!senhaCrypt) {
-            throw new Error("Usuario ou senha Invalido");
-
-        }
-
-        const token = sign({
-            id: aluno.id,
-            nome: aluno.nome,
-            email: aluno.email
-        },
-            process.env.JWT_SECRETO as string,
-            {
-                subject: aluno.id,
-                expiresIn: '8h'
-            })
-        return {
-            id: aluno.id,
-            nome: aluno.nome,
-            email: aluno.email,
-            token: token
-        }
-    }   
-
-    async verificaToken(id: string){
-
-        const aluno = await prismaClient.aluno.findUnique({
-
-            where:{
-
-                id: id
-            },
-
-             select:{
-
-                id: true
-            }
+    async loginUsuario({ email, senha }: Login) {
+        
+        const usuario = await prismaClient.aluno.findFirst({
+            where: { email },
+        }) || await prismaClient.personal.findFirst({
+            where: { email },
         });
 
-        if(!aluno){
-
-            throw new Error('Usuário ou senha incorretos!')
+        
+        if (!usuario) {
+            throw new Error("Usuário ou senha inválidos");
         }
 
-        return aluno;
+        
+        const senhaValida = await compare(senha, usuario.senha);
+        if (!senhaValida) {
+            throw new Error("Usuário ou senha inválidos");
+        }
+
+        
+       
+
+        
+        const token = sign(
+            {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email,
+                 
+            },
+            process.env.JWT_SECRETO as string,
+            {
+                subject: usuario.id,
+                expiresIn: '8h',
+            }
+        );
+
+        return {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email,
+            
+            token: token,
+        };
+    }
+
+    async verificaToken(id: string) {
+        const usuario = await prismaClient.aluno.findUnique({
+            where: { id },
+            select: { id: true },
+        }) || await prismaClient.personal.findUnique({
+            where: { id },
+            select: { id: true },
+        });
+
+        if (!usuario) {
+            throw new Error('Usuário não encontrado');
+        }
+
+        return usuario;
     }
 }
 
-export { LoginServices }
+export { LoginServices };

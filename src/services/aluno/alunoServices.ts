@@ -8,12 +8,11 @@ interface Aluno {
   endereco: string
   data_nascimento: string
   senha: string
-  status: boolean
   personalID: string
 }
 
 class AlunoServises {
-  async Cadastar_Aluno({ nome, telefone, email, endereco, data_nascimento, senha, status, personalID }: Aluno) {
+  async Cadastar_Aluno({ nome, telefone, email, endereco, data_nascimento, senha, personalID }: Aluno) {
     const senhaCrypt = await hash(senha, 8)
     const cadastrar = await prismaClient.aluno.create({
       data: {
@@ -23,7 +22,7 @@ class AlunoServises {
         endereco,
         data_nascimento,
         senha: senhaCrypt,
-        status: status ? 1 : 0,
+        
         personalID
       }
     })

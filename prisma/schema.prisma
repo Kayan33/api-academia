@@ -21,7 +21,7 @@ model Aluno {
   endereco        String
   data_nascimento String
   senha           String
-  status          Int
+
   data_inscricao  DateTime @default(now())
   personal        Personal @relation(fields: [personalID], references: [id])
   personalID      String

@@ -5,7 +5,7 @@ class loginController {
     async loginAluno(req: Request, res: Response) {
         const { email, senha } = req.body
         const loginServices = new LoginServices
-        const resposta = await loginServices.loginAluno({
+        const resposta = await loginServices.loginUsuario({
             email,
             senha
         })
