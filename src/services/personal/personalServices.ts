@@ -36,7 +36,7 @@ class PersonalServices {
   async getAllPersonalTrainers() {
     const ver = await prismaClient.personal.findMany({
       include: {
-        aluno: true // Incluir os Alunos associados
+        aluno: true 
       }
     });
     return ver;

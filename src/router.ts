@@ -10,8 +10,11 @@ import { estaAutenticado } from "./middleware/estaAutenticado";
 
 const router = Router()
 
-router.post('/aluno', new AlunoController().cadastro_Aluno)
-router.get('/aluno', new AlunoController().get_Aluno)
+router.post('/CadastrarAluno', new AlunoController().cadastro_Aluno)
+router.get('/Consultaraluno', new AlunoController().get_Aluno)
+router.post('/ConsultarAlunoUnico', new AlunoController().consultarUsuariosUnico)
+router.put('/AlterarDadosAluno', new AlunoController().alterarDadosUsuarios)
+router.delete('/ApagarAluno/:id', new AlunoController().apagarUsuarios)
 
 router.post('/personal', new PersonalController().cadastro_Personal)
 router.get('/personal', new PersonalController().getPersonalTrainers)

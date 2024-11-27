@@ -24,7 +24,7 @@ model Aluno {
 
   data_inscricao  DateTime @default(now())
   personal        Personal @relation(fields: [personalID], references: [id])
-  personalID      String
+  personalID      String @default("ea59261a-7cd3-43a1-b5c0-6b3be695e588")
 
   @@map("aluno")
 }
