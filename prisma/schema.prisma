@@ -23,8 +23,8 @@ model Aluno {
   senha           String
 
   data_inscricao  DateTime @default(now())
-  personal        Personal @relation(fields: [personalID], references: [id])
-  personalID      String @default("ea59261a-7cd3-43a1-b5c0-6b3be695e588")
+  personal        Personal? @relation(fields: [personalID], references: [id])
+  personalID      String? 
 
   @@map("aluno")
 }
