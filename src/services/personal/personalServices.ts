@@ -25,6 +25,7 @@ interface AlterarPersonal {
 class PersonalServices {
   async cadastrar_personal({ nome, telefone, email, CREF, sexo, senha, aluno }: Personal) {
 
+
     const senhaCrypt = await hash(senha, 8)
     const cadastrar = await prismaClient.personal.create({
       data: {

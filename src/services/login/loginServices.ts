@@ -29,14 +29,14 @@ class LoginServices {
 
         
        
-
+        const tipo = usuario.hasOwnProperty('CREF') ? 'aluno' : 'personal';
         
         const token = sign(
             {
                 id: usuario.id,
                 nome: usuario.nome,
                 email: usuario.email,
-                 
+                tipo
             },
             process.env.JWT_SECRETO as string,
             {
@@ -49,8 +49,8 @@ class LoginServices {
             id: usuario.id,
             nome: usuario.nome,
             email: usuario.email,
-            
             token: token,
+            tipo
         };
     }
 

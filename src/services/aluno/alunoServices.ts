@@ -31,7 +31,7 @@ class AlunoServises {
         endereco: endereco,
         data_nascimento: data_nascimento,
         senha: senhaCrypt,
-        personalID: personalID
+        personalID: personalID 
 
 
       }
