@@ -18,6 +18,10 @@ router.delete('/ApagarAluno/:id', new AlunoController().apagarUsuarios)
 
 router.post('/personal', new PersonalController().cadastro_Personal)
 router.get('/personal', new PersonalController().getPersonalTrainers)
+router.post('/personal',estaAutenticadoPersonal, new PersonalController().cadastro_Personal)
+router.get('/personal',estaAutenticadoPersonal, new PersonalController().getPersonalTrainers)
+router.post('/ConsultarPersonalUnico/:id',estaAutenticadoPersonal, new PersonalController().consultarUsuariosUnico)
+router.put('/AlterarDadosPersonal/:id',estaAutenticadoPersonal, new PersonalController().alterarDadosPersonal)
 
 
 router.post('/treino',estaAutenticado, new TreinoController().cadastro_Treino)
