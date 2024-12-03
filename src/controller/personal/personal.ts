@@ -41,6 +41,14 @@ class PersonalController {
         })
         return res.json(resposta)
     }
+
+    async apagarPersonal(req: Request, res: Response) {
+        const { id } = req.params
+        const personalServices = new PersonalServices()
+        const resposta = await personalServices.apagarPersonal(id)
+        return res.json(resposta)
+    
+      }
 }
 
 export default PersonalController

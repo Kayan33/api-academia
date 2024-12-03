@@ -18,7 +18,7 @@ interface AlterarUsuarios {
   email: string
   endereco: string
   data_nascimento: string
-  personalID: string
+  
 }
 class AlunoServises {
   async Cadastar_Aluno({ nome, telefone, email, endereco, data_nascimento, senha, personalID }: Aluno) {
@@ -55,15 +55,17 @@ class AlunoServises {
       },
       select: {
         nome: true,
-        email: true,
-        senha: true
+        telefone:true,
+        email:true,
+        endereco:true,
+        data_nascimento:true
       }
     })
     return resposta
 
   }
 
-  async alterarDadosAluno({ id, nome, telefone, email, endereco, data_nascimento, personalID }: AlterarUsuarios) {
+  async alterarDadosAluno({ id, nome, telefone, email, endereco, data_nascimento, }: AlterarUsuarios) {
     await prismaClient.aluno.update({
       where: {
         id: id
@@ -74,7 +76,7 @@ class AlunoServises {
         email: email,
         endereco: endereco,
         data_nascimento: data_nascimento,
-        personalID: personalID
+        
       }
     })
     return ({ data: "Alterado com Sucesso" })

@@ -32,7 +32,9 @@ class AlunoController {
   }
 
   async alterarDadosUsuarios(req: Request, res: Response) {
-    const { id, nome, telefone, email, endereco, data_nascimento, personalID } = req.body
+const {id} =req.params
+
+    const { nome, telefone, email, endereco, data_nascimento } = req.body
     const enviardadosServices = new AlunoServises()
     const resposta = await enviardadosServices.alterarDadosAluno({
       id,
@@ -41,7 +43,6 @@ class AlunoController {
       email,
       endereco,
       data_nascimento,
-      personalID
     })
 
     return res.json(resposta)

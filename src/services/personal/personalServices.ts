@@ -88,6 +88,15 @@ class PersonalServices {
     })
     return ({dados:'Cadastro Efetuado com Sucesso'})
   }
+  
+  async apagarPersonal(id: string) {
+    await prismaClient.personal.delete({
+      where: {
+        id: id
+      }
+    })
+    return ({ dados: "Registro Apagado com sucesso" })
+  }
 }
 
 export { PersonalServices };

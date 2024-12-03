@@ -12,16 +12,16 @@ const router = Router()
 
 router.post('/CadastrarAluno', new AlunoController().cadastro_Aluno)
 router.get('/Consultaraluno', new AlunoController().get_Aluno)
-router.post('/ConsultarAlunoUnico', new AlunoController().consultarUsuariosUnico)
-router.put('/AlterarDadosAluno', new AlunoController().alterarDadosUsuarios)
+router.post('/ConsultarAlunoUnico/:id', new AlunoController().consultarUsuariosUnico)
+router.put('/AlterarDadosAluno/:id', new AlunoController().alterarDadosUsuarios)
 router.delete('/ApagarAluno/:id', new AlunoController().apagarUsuarios)
 
 router.post('/CadastrarPersonal', new PersonalController().cadastro_Personal)
 router.get('/ConsultarPersonal', new PersonalController().getPersonalTrainers)
-router.post('/personal',estaAutenticado, new PersonalController().cadastro_Personal)
-router.put('/AlterarDadosPersonal/:id', new PersonalController().getPersonalTrainers)
-router.post('/ConsultarPersonalUnico/:id',estaAutenticado, new PersonalController().consultarUsuariosUnico)
-router.put('/AlterarDadosPersonal/:id',estaAutenticado, new PersonalController().alterarDadosPersonal)
+router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
+router.post('/ConsultarPersonalUnico/:id', new PersonalController().consultarUsuariosUnico)
+router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
+router.delete('/ApagarPersonal/:id', new PersonalController().apagarPersonal)
 
 
 router.post('/treino',estaAutenticado, new TreinoController().cadastro_Treino)

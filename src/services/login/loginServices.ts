@@ -29,7 +29,7 @@ class LoginServices {
 
         
        
-        const tipo = usuario.hasOwnProperty('CREF') ? 'aluno' : 'personal';
+        const tipo = usuario.hasOwnProperty('CREF') ? 'personal' : 'aluno';
         
         const token = sign(
             {
