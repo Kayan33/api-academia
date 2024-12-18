@@ -56,5 +56,21 @@ const {id} =req.params
     return res.json(resposta)
 
   }
+  
+  
+  async  resetPassword(req: Request, res: Response) {
+    const { token } = req.params
+    const {senha } = req.body;
+  
+    try {
+      const alunoServices = new AlunoServises();
+      const message = await alunoServices.resetPassword(token, senha); 
+      return res.status(200).json({ message });
+    } catch (error) {
+      return res.status(400).json({ error: "Erro ao trocar senha."});
+    }
+  };
+  
+  
 }
 export default AlunoController

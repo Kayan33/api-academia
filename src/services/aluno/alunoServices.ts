@@ -1,5 +1,6 @@
 import { hash } from "bcryptjs";
 import prismaClient from "../prisma";
+import { verify } from "jsonwebtoken";
 
 interface Aluno {
   nome: string
@@ -91,6 +92,28 @@ class AlunoServises {
     return ({ dados: "Registro Apagado com sucesso" })
   }
 
+  
+  async resetPassword(token: string, senha: string) {
+    try {
+      
+      const decodificarToken = verify(token, process.env.JWT_SECRETO as string) as { sub: string };
+
+      const senhaCrypt = await hash(senha, 8);
+      await prismaClient.aluno.update({
+        where: {
+          id: decodificarToken.sub,
+        },
+        data: {
+          senha: senhaCrypt,
+        },
+      });
+
+      return "Senha redefinida com sucesso!";
+    } catch (error) {
+      throw new Error("Token inválido ou expirado!");
+    }
+  }
+  
 }
 
 export default AlunoServises
