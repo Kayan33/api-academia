@@ -7,6 +7,7 @@ import RotinaController from "./controller/rotina/rotina";
 import CategoriaController from "./controller/categoria/categoria";
 import { loginController } from "./controller/login/loginController";
 import { estaAutenticado } from "./middleware/estaAutenticado";
+import EmailController from "./controller/email/emailController";
 
 const router = Router()
 
@@ -24,11 +25,11 @@ router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPer
 router.delete('/ApagarPersonal/:id', new PersonalController().apagarPersonal)
 
 
-router.post('/treino',estaAutenticado, new TreinoController().cadastro_Treino)
-router.get('/treino',estaAutenticado, new TreinoController().getTreino)
+router.post('/treino', new TreinoController().cadastro_Treino)
+router.get('/treino', new TreinoController().getTreino)
 
-router.post('/rotina',estaAutenticado, new RotinaController().cadastro_Rotina)
-router.get('/rotina',estaAutenticado, new RotinaController().getRotina)
+router.post('/rotina', new RotinaController().cadastro_Rotina)
+router.get('/rotina', new RotinaController().getRotina)
 
 router.post('/exercicio', new ExercicioController().cadastro_Exercicio)
 router.get('/exercicio', new ExercicioController().getTreino)
@@ -38,6 +39,9 @@ router.get('/categoria', new CategoriaController().getCadastro)
 
 router.post('/loginUsuarios', new loginController().loginAluno)
 router.get('/verificaToken', new loginController().verificaToken)
+
+router.post("/esqueci-senha", new EmailController().sendResetPasswordEmail);
+router.post("/resetar-senha/:token", new AlunoController().resetPassword);
 
 
 export default router
