@@ -34,8 +34,11 @@ router.get('/rotina', new RotinaController().getRotina)
 router.post('/exercicio', new ExercicioController().cadastro_Exercicio)
 router.get('/exercicio', new ExercicioController().getTreino)
 
-router.post('/categoria', new CategoriaController().cadastro_Categoria)
-router.get('/categoria', new CategoriaController().getCadastro)
+router.post('/CadastrarCategoria', new CategoriaController().cadastro_Categoria)
+router.get('/ConsulCategoria', new CategoriaController().getCadastro)
+router.post('/ConsultarCategoriaUnico/:id', new CategoriaController().consultarUsuariosUnico)
+router.put('/AlterarDadosCategoria/:id', new CategoriaController().alterarDadosPersonal)
+router.delete('/ApagarCategoria/:id', new CategoriaController().apagarPersonal)
 
 router.post('/loginUsuarios', new loginController().loginAluno)
 router.get('/verificaToken', new loginController().verificaToken)

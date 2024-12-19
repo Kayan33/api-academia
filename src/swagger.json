@@ -1,0 +1,267 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API de Gestão de Treinos",
+    "description": "API para Gestão de Treinos.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/CadastrarCategoria": {
+      "post": {
+        "summary": "Cadastrar uma nova categoria de treino",
+        "description": "Esta rota permite cadastrar uma nova categoria de treino, como 'Cardio', 'Força', etc.",
+        "operationId": "cadastrarCategoria",
+        "tags": ["Categoria"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoria": {
+                    "type": "string",
+                    "description": "Nome da categoria de treino"
+                  }
+                },
+                "required": ["categoria"]
+              },
+              "example": {
+                "categoria": "Cardio"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoria cadastrada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID único da categoria criada"
+                    },
+                    "categoria": {
+                      "type": "string",
+                      "description": "Nome da categoria cadastrada"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "12345",
+                  "categoria": "Cardio"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao cadastrar a categoria"
+          }
+        }
+      }
+    },
+    "/ConsulCategoria": {
+      "get": {
+        "summary": "Listar todas as categorias de treino",
+        "description": "Esta rota retorna todas as categorias de treino cadastradas.",
+        "operationId": "listarCategorias",
+         "tags": ["Categoria"],
+        "responses": {
+          "200": {
+            "description": "Categorias encontradas com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "ID da categoria"
+                      },
+                      "categoria": {
+                        "type": "string",
+                        "description": "Nome da categoria"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "12345",
+                    "categoria": "Cardio"
+                  },
+                  {
+                    "id": "12346",
+                    "categoria": "Força"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao buscar categorias"
+          }
+        }
+      }
+    },
+    "/ConsultarCategoriaUnico/{id}": {
+      "post": {
+        "summary": "Consultar uma categoria de treino específica",
+        "description": "Esta rota consulta uma categoria de treino específica utilizando seu ID.",
+        "operationId": "consultarCategoriaUnico",
+         "tags": ["Categoria"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da categoria a ser consultada",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoria encontrada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID da categoria"
+                    },
+                    "categoria": {
+                      "type": "string",
+                      "description": "Nome da categoria"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "12345",
+                  "categoria": "Cardio"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao consultar a categoria"
+          }
+        }
+      }
+    },
+    "/AlterarDadosCategoria/{id}": {
+      "put": {
+        "summary": "Alterar dados de uma categoria de treino",
+        "description": "Esta rota permite alterar os dados de uma categoria de treino existente.",
+        "operationId": "alterarDadosCategoria",
+         "tags": ["Categoria"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da categoria a ser alterada",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoria": {
+                    "type": "string",
+                    "description": "Novo nome para a categoria de treino"
+                  }
+                },
+                "required": ["categoria"]
+              },
+              "example": {
+                "categoria": "Peito"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoria alterada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dados": {
+                      "type": "string",
+                      "description": "Mensagem de sucesso"
+                    }
+                  }
+                },
+                "example": {
+                  "dados": "Cadastro de categoria alterado com sucesso"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao alterar dados da categoria"
+          }
+        }
+      }
+    },
+    "/ApagarCategoria/{id}": {
+      "delete": {
+        "summary": "Apagar uma categoria de treino",
+        "description": "Esta rota permite apagar uma categoria de treino existente.",
+        "operationId": "apagarCategoria",
+         "tags": ["Categoria"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da categoria a ser apagada",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoria apagada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dados": {
+                      "type": "string",
+                      "description": "Mensagem de sucesso"
+                    }
+                  }
+                },
+                "example": {
+                  "dados": "Categoria apagada com sucesso"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao apagar categoria"
+          }
+        }
+      }
+    }
+  }
+}
