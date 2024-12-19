@@ -25,7 +25,7 @@ model Aluno {
   data_inscricao  DateTime @default(now())
   personal        Personal? @relation(fields: [personalID], references: [id])
   personalID      String? 
-
+   treino     Treino[] @relation("AlunoTreino")
   @@map("aluno")
 }
 
@@ -38,6 +38,8 @@ model Personal {
   sexo      String
   senha     String
   aluno     Aluno[]
+  rotina Rotina[]
+  treino Treino[]
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
 
@@ -47,6 +49,9 @@ model Personal {
 model Treino {
   id          String   @id @default(uuid())
   nome_treino String
+  personal      Personal @relation(fields: [personalID], references: [id])
+  personalID    String
+   aluno     Aluno[] @relation("AlunoTreino")
   rotinas     Rotina[] @relation("TreinoRotina")
 }
 
@@ -55,6 +60,9 @@ model Rotina {
   repeticao String
   descanso  String
   series    String
+  personal      Personal @relation(fields: [personalID], references: [id])
+  personalID    String
+
   treinos   Treino[]    @relation("TreinoRotina")
   exercicio Exercicio[] @relation("exercicioRotina")
 }

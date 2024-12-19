@@ -5,10 +5,11 @@ interface Rotina {
   descanso: string
   series: string
   exercicioID: string[]
+  personalID: string
 }
 
 class RotinaServices {
-  async cadastar_Rotina({ repeticao, descanso, series, exercicioID }: Rotina) {
+  async cadastar_Rotina({ repeticao, descanso, series, exercicioID,personalID }: Rotina) {
     const cadastrar = await prismaClient.rotina.create({
       data: {
         repeticao,
@@ -16,10 +17,14 @@ class RotinaServices {
         series,
         exercicio: {
           connect: exercicioID.map(id => ({ id }))
+        },
+        personal: {
+         connect:{ id:personalID}
         }
       },
       include: {
-        exercicio: true
+        exercicio: true,
+        personal:true
       }
     })
     return cadastrar
