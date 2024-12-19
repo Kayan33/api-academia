@@ -27,7 +27,7 @@ class CategoriaController {
         }
     }
 
-    async consultarUsuariosUnico(req: Request, res: Response) {
+    async consultarCategoriaUnico(req: Request, res: Response) {
         try {
             const { id } = req.params;
             const categoriaServices = new CategoriaServices();

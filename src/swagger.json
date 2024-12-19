@@ -63,7 +63,7 @@
         }
       }
     },
-    "/ConsulCategoria": {
+    "/ConsultarTodosCategoria": {
       "get": {
         "summary": "Listar todas as categorias de treino",
         "description": "Esta rota retorna todas as categorias de treino cadastradas.",
@@ -262,6 +262,231 @@
           }
         }
       }
+    }, "/CadastrarExercicios": {
+      "post": {
+        "summary": "Cadastrar Exercício",
+        "tags": ["Exercícios"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome_exercicio": { "type": "string" },
+                  "URL_video": { "type": "string" },
+                  "categoriaID": { "type": "string" }
+                },
+                "required": ["nome_exercicio", "URL_video", "categoriaID"]
+              },
+              "example": {
+                "nome_exercicio": "Supino Reto",
+                "URL_video": "https://exemplo.com/video-supino",
+                "categoriaID": "ID Categoria aqui"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Exercício cadastrado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "67890",
+                  "nome_exercicio": "Supino Reto",
+                  "URL_video": "https://exemplo.com/video-supino",
+                  "categoriaID": "12345",
+                  "categoria": {
+                    "categoria": "Peitoral"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar exercício.",
+            "content": {
+              "application/json": {
+                "example": { "message": "Erro ao cadastrar exercício." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ConsultarTodosExercicios": {
+      "get": {
+        "summary": "Listar Todos os Exercícios",
+        "tags": ["Exercícios"],
+        "responses": {
+          "200": {
+            "description": "Lista de exercícios retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "nome_exercicio": "Supino Reto",
+                    "URL_video": "https://exemplo.com/video-supino",
+                    "categoria": {
+                      "categoria": "Peitoral"
+                    }
+                  },
+                  {
+                    "nome_exercicio": "Agachamento Livre",
+                    "URL_video": "https://exemplo.com/video-agachamento",
+                    "categoria": {
+                      "categoria": "Pernas"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao listar exercícios.",
+            "content": {
+              "application/json": {
+                "example": { "message": "Erro ao listar exercícios." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ConsultarExerciciosUnico/{id}": {
+      "post": {
+        "summary": "Consultar Exercício por ID",
+        "tags": ["Exercícios"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do exercício a ser consultado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercício encontrado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "nome_exercicio": "Supino Reto",
+                  "URL_video": "https://exemplo.com/video-supino",
+                  "categoria": {
+                    "categoria": "Peitoral"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercício não encontrado.",
+            "content": {
+              "application/json": {
+                "example": { "message": "Exercício não encontrado." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AlterarDadosExercicios/{id}": {
+      "put": {
+        "summary": "Alterar Dados do Exercício",
+        "tags": ["Exercícios"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do exercício a ser alterado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome_exercicio": { "type": "string" },
+                  "URL_video": { "type": "string" },
+                  "categoriaID": { "type": "string" }
+                },
+                "required": ["nome_exercicio", "URL_video", "categoriaID"]
+              },
+              "example": {
+                "nome_exercicio": "Supino Inclinado",
+                "URL_video": "https://exemplo.com/video-supino-inclinado",
+                "categoriaID": "12345"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados do exercício alterados com sucesso.",
+            "content": {
+              "application/json": {
+                "example": { "dados": "Alteração efetuada com sucesso." }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao alterar dados do exercício.",
+            "content": {
+              "application/json": {
+                "example": { "message": "Erro ao alterar dados do exercício." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ApagarExercicios/{id}": {
+      "delete": {
+        "summary": "Apagar Exercício",
+        "tags": ["Exercícios"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do exercício a ser apagado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercício apagado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": { "dados": "Exercício apagado com sucesso." }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao apagar exercício.",
+            "content": {
+              "application/json": {
+                "example": { "message": "Erro ao apagar exercício." }
+              }
+            }
+          }
+        }
+      }
     }
   }
+
+  
 }
