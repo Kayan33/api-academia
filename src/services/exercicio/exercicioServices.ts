@@ -1,3 +1,5 @@
+
+
 import prismaClient from "../prisma";
 
 interface Exercicios {
@@ -53,10 +55,12 @@ class ExercicioServices {
     }
   }
 
-  // Alterado para usar findFirst em vez de findMany
   async consultarExercicios(id: string) {
     try {
-      const resposta = await prismaClient.exercicio.findFirst({
+      const resposta = await prismaClient.exercicio.findUnique({
+        where: {
+          id: id, 
+        },
         include:{
           categoria:{
             

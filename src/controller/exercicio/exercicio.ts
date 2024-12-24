@@ -25,7 +25,7 @@ class ExercicioController {
       return res.json(ver)
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: "Erro ao buscar as exercicios." }); 
+      return res.status(500).json({ error: "Erro ao buscar exercicios." }); 
     }
   }
 
@@ -37,7 +37,7 @@ class ExercicioController {
         return res.json(resposta);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: "Erro ao consultar a exercicios." });
+        return res.status(500).json({ error: "Erro ao consultar exercicios." });
     }
 }
 
@@ -55,7 +55,7 @@ async alterarDadosExercicios(req: Request, res: Response) {
         return res.json(resposta);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: "Erro ao alterar os dados da exercicios." });
+        return res.status(500).json({ error: "Erro ao alterar os dados exercicios." });
     }
 }
 
@@ -67,7 +67,7 @@ async apagarExercicios(req: Request, res: Response) {
         return res.json(resposta);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: "Erro ao apagar a exercicios." });
+        return res.status(500).json({ error: "Erro ao apagar exercicios." });
     }
 }
 }
