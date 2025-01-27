@@ -23,7 +23,7 @@ export function verificaTokenSenha(
     const { sub } = verify(token as string, process.env.JWT_SECRETO as string) as Payload;
 
     
-    req.alunoID = sub;
+    req.personalID = sub;
 
     
     return next();

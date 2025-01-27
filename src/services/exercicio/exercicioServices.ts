@@ -39,6 +39,7 @@ class ExercicioServices {
     try {
       const ver = await prismaClient.exercicio.findMany({
         select: {
+          id: true,
           nome_exercicio: true,
           URL_video: true,
           categoria: {

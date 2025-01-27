@@ -14,18 +14,18 @@ datasource db {
 }
 
 model Aluno {
-  id              String   @id @default(uuid())
+  id              String           @id @default(uuid())
   nome            String
   telefone        String
-  email           String   @unique
+  email           String           @unique
   endereco        String
   data_nascimento String
   senha           String
+  data_inscricao  DateTime         @default(now())
+  personal        Personal?        @relation(fields: [personalID], references: [id])
+  personalID      String?
+  treino          Treino[]        @relation("AlunoTreino")
 
-  data_inscricao  DateTime @default(now())
-  personal        Personal? @relation(fields: [personalID], references: [id])
-  personalID      String? 
-   treino     Treino[] @relation("AlunoTreino")
   @@map("aluno")
 }
 
@@ -38,8 +38,7 @@ model Personal {
   sexo      String
   senha     String
   aluno     Aluno[]
-  rotina Rotina[]
-  treino Treino[]
+  treino    Treino[]
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
 
@@ -47,34 +46,33 @@ model Personal {
 }
 
 model Treino {
-  id          String   @id @default(uuid())
-  nome_treino String
-  personal      Personal @relation(fields: [personalID], references: [id])
-  personalID    String
-   aluno     Aluno[] @relation("AlunoTreino")
-  rotinas     Rotina[] @relation("TreinoRotina")
+  id              String           @id @default(uuid())
+  nome_treino     String
+  personal        Personal         @relation(fields: [personalID], references: [id])
+  personalID      String
+  aluno           Aluno[]       @relation("AlunoTreino")
+  AlunoExercicio  AlunoExercicio[] 
 }
 
-model Rotina {
-  id        String      @id @default(uuid())
-  repeticao String
-  descanso  String
-  series    String
-  personal      Personal @relation(fields: [personalID], references: [id])
-  personalID    String
-
-  treinos   Treino[]    @relation("TreinoRotina")
-  exercicio Exercicio[] 
+model AlunoExercicio {
+  id          String    @id @default(uuid())
+  exercicioID String
+  repeticoes  Int?
+  descanso    Int?
+  series      Int?
+  exercicio   Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
+  treinos     Treino?   @relation(fields: [treinosID], references: [id]) // Relacionamento opcional
+  treinosID   String?   // Tornando o campo opcional
 }
+
 
 model Exercicio {
-  id             String    @id @default(uuid())
-  nome_exercicio String
-  URL_video      String
-  rotina         Rotina? @relation(fields: [rotinaID], references: [id])
-  rotinaID String?
-  categoria      Categoria @relation(fields: [categoriaID], references: [id])
-  categoriaID    String
+  id              String           @id @default(uuid())
+  nome_exercicio  String
+  URL_video       String?
+  alunoExercicios AlunoExercicio[]
+  categoria       Categoria        @relation(fields: [categoriaID], references: [id], onDelete: Cascade)
+  categoriaID     String
 
   @@map("exercicio")
 }

@@ -1,42 +1,29 @@
-import { Request, Response, NextFunction } from "express";
-import { verify } from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express'
+import { verify } from 'jsonwebtoken'
 
-interface Payload{
-
+interface Payload {
     sub: string
-};
+}
 
 export function estaAutenticado(
-
-    req: Request, 
-    res: Response, 
+    req: Request,
+    res: Response,
     next: NextFunction
-
-){
-
-    const autToken = req.headers.authorization?.split(" ");
-
-    if (!autToken){
-
-        return res.json({dados: 'Token Inválido!'});
+) {
+    const autToken = req.headers.authorization
+    if (!autToken) {
+        return res.json({ dados: 'Token Inválido' })
     }
 
-    try{
-
-        const {sub} = verify(
-
-            autToken[1],
+    const [, token] = autToken.split(' ')
+    try {
+        const { sub } = verify(
+            token,
             process.env.JWT_SECRETO as string
-
-        ) as Payload;
-
-        req.alunoID = sub;
-
-        return next();
-
-    }catch{
-
-        return res.json({dados: 'Token Inválido!'});
-        
+        ) as Payload
+        req.personalID = sub
+        return next()
+    } catch (err) {
+        return res.json({ dados: 'Token Inválido' })
     }
 }

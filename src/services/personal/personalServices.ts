@@ -69,6 +69,26 @@ class PersonalServices {
     return resposta
   }
 
+  async consultarPersonalComAlunoUnico(personalId: string, alunoId: string) {
+    const resposta = await prismaClient.personal.findUnique({
+      where: {
+        id: personalId,
+      },
+      include: {
+        aluno: {
+          where: {
+            id: alunoId,
+          },
+        },
+      },
+    });
+  
+    return resposta;
+  }
+
+  
+  
+
   async alterarDadosPersonal({ id, nome, telefone, email, CREF, sexo, aluno }: AlterarPersonal) {
     await prismaClient.personal.update({
       where: {
@@ -80,7 +100,7 @@ class PersonalServices {
         email: email,
         CREF: CREF,
         sexo: sexo,
-        aluno: aluno.length > 0 ? { connect: aluno.map(id => ({ id })) } : undefined,
+        aluno: aluno.length > 0 ? { connect: aluno.map(email => ({ email })) } : undefined,
       },
       include: {
         aluno: true

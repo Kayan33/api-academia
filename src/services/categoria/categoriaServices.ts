@@ -27,9 +27,9 @@ class CategoriaServices {
     async getAllCategoria() {
         try {
             const ver = await prismaClient.categoria.findMany({
-                select: {
-                    categoria: true,
-                },
+                include:{
+                    exercicios:true
+                }
             });
             return ver;
         } catch (error) {

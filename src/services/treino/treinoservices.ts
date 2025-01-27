@@ -2,18 +2,19 @@ import prismaClient from "../prisma";
 
 interface Treino {
   nome_treino: string,
-  rotinasID: string[]
+  AlunoExercicio?: string[]
   personalID: string
   alunoID: string[]
 }
 
 class TreinoServices {
-  async cadastrar_Treinos({ nome_treino, rotinasID,personalID,alunoID}: Treino) {
+  async cadastrar_Treinos({ nome_treino, AlunoExercicio,personalID,alunoID}: Treino) {
     const cadastrar = await prismaClient.treino.create({
+      
       data: {
         nome_treino,
-        rotinas: {
-          connect: rotinasID.map(id => ({ id })),
+        AlunoExercicio: {
+          connect: AlunoExercicio ? AlunoExercicio.map(id => ({ id })) : [],
         },
         personal:{
           connect:{id:personalID}
@@ -23,7 +24,7 @@ class TreinoServices {
         },
       },
       include: {
-        rotinas: {
+        AlunoExercicio: {
           include: {
             exercicio: true  
           }
@@ -36,7 +37,7 @@ class TreinoServices {
   async getAllTreinos() {
     const ver = await prismaClient.treino.findMany({
       include: {
-        rotinas: {
+        AlunoExercicio: {
           include: {
             exercicio: {
               include:{
@@ -48,6 +49,22 @@ class TreinoServices {
       },
     });
     return ver;
+  }
+
+  async consultartreinolUnico({id}:{id :string}){
+    const ver =  await prismaClient.treino.findUnique({
+      where: { id},
+
+      include:{
+        aluno:true,
+        AlunoExercicio:{
+          include:{
+            exercicio:true
+          }
+        }
+      }
+    })
+    return ver
   }
 }
 

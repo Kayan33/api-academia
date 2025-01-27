@@ -54,13 +54,26 @@ class AlunoServises {
       where: {
         id: id
       },
-      select: {
-        nome: true,
-        telefone:true,
-        email:true,
-        endereco:true,
-        data_nascimento:true
+      include:{
+        personal:true,
+        treino:{
+          include:{
+            AlunoExercicio:{
+              include:{
+                exercicio:{
+                  include:{
+                    categoria:{
+                      
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        
       }
+      
     })
     return resposta
 

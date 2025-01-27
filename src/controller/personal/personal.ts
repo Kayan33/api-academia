@@ -26,6 +26,27 @@ class PersonalController {
         return res.json(resposta)
     }
 
+    async consultarPersonalComAlunoUnico(req: Request, res: Response) {
+        const { personalId, alunoId } = req.params;
+    
+        try {
+            const personalServices = new PersonalServices();
+            const resposta = await personalServices.consultarPersonalComAlunoUnico(personalId, alunoId);
+    
+            if (!resposta) {
+                return res.status(404).json({ message: "Personal ou aluno não encontrados" });
+            }
+    
+            return res.json(resposta);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: "Erro ao buscar personal e aluno" });
+        }
+    }
+    
+
+    
+
     async alterarDadosPersonal(req:Request,res:Response){
         const{id}=req.params
         const {nome,telefone,email,CREF,sexo,aluno} = req.body;

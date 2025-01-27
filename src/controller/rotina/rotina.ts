@@ -1,24 +1,35 @@
-import { Request,  Response } from "express";
-import RotinaServices from "../../services/rotina/rotinaServices";
+import { Request, Response } from "express";
+import RotinaExercicioServices from "../../services/rotina/rotinaServices";
 
-class RotinaController {
-async cadastro_Rotina (req:Request, res:Response){
-  const {repeticao,descanso,series,exercicioID,personalID}=req.body
-  const rotinaService = new RotinaServices()
-  const resposta = await rotinaService.cadastar_Rotina({
-    repeticao,
+class RotinaExercicioController {
+  async cadastro_RotinaExercicio(req: Request, res: Response) {
+    const { treinosID } = req.params
+    const { repeticoes, descanso, series, exercicioID } = req.body
+    const rotinaService = new RotinaExercicioServices()
+    const resposta = await rotinaService.cadastrarRotinaExercicioServices({
+      repeticoes,
       descanso,
       series,
-       exercicioID,
-       personalID
-  })
-return res.json(resposta)
-}
+      exercicioID,
+      treinosID
+    })
+    return res.json(resposta)
+  }
 
-async getRotina (req:Request, res:Response){
-  const rotinaService = new RotinaServices()
-  const resposta = await rotinaService.getAllRotina()
-  return res.json(resposta)
+  async altera_RotinaExercicio(req: Request, res: Response){
+    const{id}= req.params
+    const {repeticoes, descanso, series} =req.body
+    const rotinaService = new RotinaExercicioServices()
+    try {
+      const resposta = await rotinaService.alterarRotinaExercicioServices({
+        id,
+        repeticoes,
+        descanso,
+        series
+      })
+    } catch (error) {
+      
+    }
+  }
 }
-}
-export default RotinaController
+export default RotinaExercicioController
