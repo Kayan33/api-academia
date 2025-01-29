@@ -70,21 +70,46 @@ class PersonalServices {
   }
 
   async consultarPersonalComAlunoUnico(personalId: string, alunoId: string) {
-    const resposta = await prismaClient.personal.findUnique({
-      where: {
-        id: personalId,
-      },
-      include: {
-        aluno: {
-          where: {
-            id: alunoId,
+    try {
+      const resposta = await prismaClient.personal.findUnique({
+        where: {
+          id: personalId,
+        },
+        include: {
+          aluno: {
+            where: {
+              id: alunoId,
+            },
+            include:{
+              treino:{
+                include:{
+                  AlunoExercicio:{
+                    include:{
+                      exercicio:{
+                        include:{
+                          categoria:{
+                            include:{
+                              
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
         },
-      },
-    });
+      });
   
-    return resposta;
+      return resposta;
+    } catch (err) {
+      console.error("Erro ao consultar personal com aluno único:", err);
+      throw new Error("Não foi possível buscar os dados do personal ou aluno.");
+    }
   }
+  
 
   
   

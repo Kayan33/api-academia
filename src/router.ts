@@ -21,13 +21,13 @@ router.delete('/ApagarAluno/:id', new AlunoController().apagarUsuarios)
 router.post('/CadastrarPersonal', new PersonalController().cadastro_Personal)
 router.get('/ConsultarPersonal', new PersonalController().getPersonalTrainers)
 router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
-router.post('/ConsultarPersonalUnico/:id', new PersonalController().consultarUsuariosUnico)
-router.post('/consultarPersonalComAlunoUnico/:personalId/:alunoId/', new PersonalController().consultarPersonalComAlunoUnico)
+router.post('/ConsultarPersonalUnico/:id',new PersonalController().consultarUsuariosUnico)
+router.post('/consultarPersonalComAlunoUnico/:personalId/:alunoId/',new PersonalController().consultarPersonalComAlunoUnico)
 router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
 router.delete('/ApagarPersonal/:id', new PersonalController().apagarPersonal)
 
 
-router.post('/treino/:alunoID/:personalID', new TreinoController().cadastro_Treino)
+router.post('/treino/:alunoID/:personalID',new TreinoController().cadastro_Treino)
 router.get('/treino', new TreinoController().getTreino)
 router.get('/consultartreinolUnico/:id/', new TreinoController().consultarTreinoUnico)
 
