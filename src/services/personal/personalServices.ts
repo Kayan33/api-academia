@@ -61,7 +61,8 @@ class PersonalServices {
         id: id
       },
       include: {
-        aluno: true
+        aluno: true,
+        treino:true
       }
     })
    

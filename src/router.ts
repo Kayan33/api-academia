@@ -29,7 +29,7 @@ router.delete('/ApagarPersonal/:id', new PersonalController().apagarPersonal)
 
 router.post('/treino/:alunoID/:personalID',new TreinoController().cadastro_Treino)
 router.get('/treino', new TreinoController().getTreino)
-router.get('/consultartreinolUnico/:id/', new TreinoController().consultarTreinoUnico)
+router.get('/consultartreinolUnico/:id', new TreinoController().consultarTreinoUnico)
 
 router.post('/rotinaExercicio/:treinosID/', new RotinaExercicioController().cadastro_RotinaExercicio)
 router.put('/ /:id/', new RotinaExercicioController().altera_RotinaExercicio)
