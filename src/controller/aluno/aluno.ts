@@ -67,6 +67,7 @@ const {id} =req.params
       const message = await alunoServices.resetPassword(token, senha); 
       return res.status(200).json({ message });
     } catch (error) {
+      console.error("Erro ao trocar senha.", error);
       return res.status(400).json({ error: "Erro ao trocar senha."});
     }
   };
