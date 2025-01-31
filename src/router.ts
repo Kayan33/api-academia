@@ -50,7 +50,7 @@ router.post('/loginUsuarios', new loginController().loginAluno)
 router.get('/verificaToken/:personalID', new loginController().verificaToken)
 
 router.post("/esqueci-senha", new EmailController().sendResetPasswordEmail);
-router.post("/resetar-senha/:token",estaAutenticado, new AlunoController().resetPassword);
+router.put("/resetar-senha/:token", new AlunoController().resetPassword);
 
 
 export default router
