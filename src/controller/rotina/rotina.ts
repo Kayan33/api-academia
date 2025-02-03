@@ -27,6 +27,7 @@ class RotinaExercicioController {
         descanso,
         
       })
+      return res.json(resposta)
     } catch (error) {
       
     }

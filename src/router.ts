@@ -32,7 +32,7 @@ router.get('/treino', new TreinoController().getTreino)
 router.get('/consultartreinolUnico/:id', new TreinoController().consultarTreinoUnico)
 
 router.post('/rotinaExercicio/:treinosID', new RotinaExercicioController().cadastro_RotinaExercicio)
-router.put('/ /:id/', new RotinaExercicioController().altera_RotinaExercicio)
+router.put('/AlterarotinaExercicio/:id', new RotinaExercicioController().altera_RotinaExercicio)
 
 router.post('/CadastrarExercicios', new ExercicioController().cadastro_Exercicio)
 router.get('/ConsultarTodosExercicios', new ExercicioController().getExercicios)
