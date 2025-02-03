@@ -59,7 +59,6 @@ model AlunoExercicio {
   exercicioID String
   repeticoes  Int?
   descanso    Int?
-  series      Int?
   exercicio   Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
   treinos     Treino?   @relation(fields: [treinosID], references: [id]) // Relacionamento opcional
   treinosID   String?   // Tornando o campo opcional

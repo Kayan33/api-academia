@@ -4,7 +4,7 @@ import prismaClient from '../prisma';
 
 class EmailService {
   
-  private transporter;
+   transporter;
 
   constructor() {
     this.transporter = nodemailer.createTransport({
@@ -21,21 +21,21 @@ class EmailService {
     });
   }
 
-  private async getUserByEmail(email: string) {
+  async getUserByEmail(email: string) {
     return prismaClient.aluno.findUnique({ where: { email } });
   }
 
-  private async getPersonalByEmail(email: string) {
+  async getPersonalByEmail(email: string) {
     return prismaClient.personal.findUnique({ where: { email } });
   }
 
-  private generateResetToken(userId: string) {
+  generateResetToken(userId: string) {
     return sign({ sub: userId }, process.env.JWT_SECRETO as string, { expiresIn: "1h" });
   }
 
-  private async sendEmail(to: string, subject: string, html: string) {
+  async sendEmail(to: string, subject: string, html: string) {
     const mailOptions = {
-      from: process.env.EMAIL_FROM,
+      from: `"Sistema para Personal" <${process.env.SMTP_EMAIL}>`, 
       to,
       subject,
       html,
@@ -50,10 +50,12 @@ class EmailService {
     }
   }
 
-  public async sendResetPasswordEmail(email: string) {
+  async sendResetPasswordEmail(email: string) {
     const user = await this.getUserByEmail(email);
     const personal = await this.getPersonalByEmail(email)
-    if (!user && !personal) throw new Error('Usuário ou Personal não encontrado!');
+    if (!user && !personal) {
+      throw { status: 404, message: 'Usuário ou Personal não encontrado!' };
+    }
 
   
     const resetUser = user || personal;  

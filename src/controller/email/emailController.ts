@@ -9,11 +9,13 @@ class EmailController {
       const emailServices = new EmailServices();
       const message = await emailServices.sendResetPasswordEmail(email);
 
-      return res.status(200).json({ message });
-    } catch (error) {
-      console.log(error);
-      
-      return res.status(400).json({ error: "Erro ao enviar E-mail" ,});
+      return res.status(200).json({success: true, message });
+    } catch (error : any) {
+      console.error(error);
+    return res.status(error.status || 500).json({
+      success: false,
+      error: error.message || "Erro interno do servidor.",
+    });
     }
   }
 }

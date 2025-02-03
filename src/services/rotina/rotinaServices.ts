@@ -3,7 +3,6 @@ import prismaClient from "../prisma";
 interface RotinaExercicio {
   repeticoes: number;
   descanso: number;
-  series: number;
   exercicioID: string  // ID dos exercícios a serem associados
   treinosID: string;      // ID do treino para vincular ao alunoExercicio
 }
@@ -12,19 +11,18 @@ interface AlteracaoRotinaExercicio {
   id: string
   repeticoes: number;
   descanso: number;
-  series: number;
 }
 
 
 
 class RotinaExercicioServices {
-  async cadastrarRotinaExercicioServices({ repeticoes, descanso, series, exercicioID, treinosID }: RotinaExercicio) {
+  async cadastrarRotinaExercicioServices({ repeticoes, descanso , exercicioID, treinosID }: RotinaExercicio) {
     try {
       const cadastrar = await prismaClient.alunoExercicio.create({
         data: {
           repeticoes,
           descanso,
-          series,
+          
 
           exercicio: { connect: { id: exercicioID } },
           treinos: { connect: { id: treinosID } }, // Conecta ao treino
@@ -41,14 +39,14 @@ class RotinaExercicioServices {
     }
   }
 
-  async alterarRotinaExercicioServices({ id, repeticoes, descanso, series }: AlteracaoRotinaExercicio) {
+  async alterarRotinaExercicioServices({ id, repeticoes, descanso,  }: AlteracaoRotinaExercicio) {
     try {
       await prismaClient.alunoExercicio.update({
         where: { id },
         data: {
           repeticoes,
           descanso,
-          series
+          
 
         },
 

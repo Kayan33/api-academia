@@ -31,7 +31,7 @@ router.post('/treino/:alunoID/:personalID',new TreinoController().cadastro_Trein
 router.get('/treino', new TreinoController().getTreino)
 router.get('/consultartreinolUnico/:id', new TreinoController().consultarTreinoUnico)
 
-router.post('/rotinaExercicio/:treinosID/', new RotinaExercicioController().cadastro_RotinaExercicio)
+router.post('/rotinaExercicio/:treinosID', new RotinaExercicioController().cadastro_RotinaExercicio)
 router.put('/ /:id/', new RotinaExercicioController().altera_RotinaExercicio)
 
 router.post('/CadastrarExercicios', new ExercicioController().cadastro_Exercicio)
