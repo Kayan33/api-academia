@@ -11,13 +11,8 @@ interface Personal {
   aluno: string[]
 }
 
-interface AlterarPersonal {
+interface AlterarAlunoDePersonal {
   id: string
-  nome: string,
-  telefone: string,
-  email: string,
-  CREF: string,
-  sexo: string,
   aluno: string[]
 }
 
@@ -115,25 +110,64 @@ class PersonalServices {
   
   
 
-  async alterarDadosPersonal({ id, nome, telefone, email, CREF, sexo, aluno }: AlterarPersonal) {
-    await prismaClient.personal.update({
-      where: {
-        id: id
-      },
-      data: {
-        nome: nome,
-        telefone: telefone,
-        email: email,
-        CREF: CREF,
-        sexo: sexo,
-        aluno: aluno.length > 0 ? { connect: aluno.map(email => ({ email })) } : undefined,
-      },
-      include: {
-        aluno: true
+  async AlterarAlunoDePersonal({ id, aluno }: AlterarAlunoDePersonal) {
+    try {
+        // Verifica se o e-mail do aluno existe
+        const alunosExistem = await prismaClient.aluno.findMany({
+            where: {
+                email: { in: aluno }
+            }
+        });
+
+        const emailsEncontrados = alunosExistem.map(a => a.email);
+        const emailsNaoEncontrados = aluno.filter(email => !emailsEncontrados.includes(email));
+
+        if (emailsNaoEncontrados.length > 0) {
+           
+          throw new Error(`E-mails não existem no sistema: ${emailsNaoEncontrados.join(", ")}`);
+        }
+
+        
+
+        // Verifica se os alunos já estão associados a outro personal
+        const alunosAssociados = await prismaClient.aluno.findMany({
+            where: {
+                email: { in: aluno },
+                personalID: { not: id }
+            }
+        });
+
+        if (alunosAssociados.length > 0) {
+
+            throw new Error("Esse aluno já está associado a outro personal.");
+            
+        }
+
+        // Atualiza os dados do personal
+        const personalAtualizado = await prismaClient.personal.update({
+            where: { id },
+            data: {
+                aluno: aluno.length > 0 ? { connect: aluno.map(email => ({ email })) } : undefined,
+            },
+            include: { aluno: true },
+        });
+
+        return { sucesso: true, mensagem: "Cadastro atualizado com sucesso!", dados: personalAtualizado };
+
+    } catch (error) {
+        console.error("Erro ao alterar personal:", error);
+        if (error instanceof Error) {
+          throw new Error(`${error.message}`);
       }
-    })
-    return ({dados:'Cadastro Efetuado com Sucesso'})
-  }
+        throw new Error("Erro ao atualizar personal.");
+        
+    }
+}
+
+
+  
+
+
   
   async apagarPersonal(id: string) {
     await prismaClient.personal.delete({

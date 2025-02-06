@@ -47,21 +47,26 @@ class PersonalController {
 
     
 
-    async alterarDadosPersonal(req:Request,res:Response){
-        const{id}=req.params
-        const {nome,telefone,email,CREF,sexo,aluno} = req.body;
-        const personalServices = new PersonalServices()
-        const resposta = await personalServices.alterarDadosPersonal({
-            id,
-            nome,
-            telefone,
-            email,
-            CREF,
-            sexo,
-            aluno
-        })
-        return res.json(resposta)
-    }
+    async alterarDadosPersonal(req: Request, res: Response) {
+      const { id } = req.params; 
+      const { aluno } = req.body; 
+  
+      try {
+          const personalServices = new PersonalServices();
+          const resposta = await personalServices.AlterarAlunoDePersonal({ id, aluno });
+  
+          return res.json(resposta);
+  
+      } catch (error: any) {
+          return res.status(500).json({
+              mensagem: "Erro interno no servidor.",
+              erro: error.message || "Erro desconhecido."
+          });
+      }
+  }
+  
+  
+  
 
     async apagarPersonal(req: Request, res: Response) {
         const { id } = req.params
