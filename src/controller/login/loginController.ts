@@ -13,7 +13,7 @@ class loginController {
     }
 
     async verificaToken(req: Request, res: Response) {
-        const id = req.personalID
+        const id = req.params.id
         const loginServices = new LoginServices ()
         const resposta = await loginServices.verificaToken(id)
         return res.json(resposta)

@@ -40,13 +40,18 @@ class CategoriaServices {
         }
     }
 
-    // ERRO AO BUSCAR COM findFirst PELO FRONT
+    
     async consultarCategoria(id: string) {
         try {
             const resposta = await prismaClient.categoria.findUnique({
                 where: {
                     id: id,
                 },
+                include:{
+                    exercicios:{
+                        
+                    }
+                }
             });
             return resposta;
         } catch (error) {

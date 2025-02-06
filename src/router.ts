@@ -3,7 +3,6 @@ import PersonalController from "./controller/personal/personal";
 import TreinoController from "./controller/treino/treino";
 import ExercicioController from "./controller/exercicio/exercicio";
 import AlunoController from "./controller/aluno/aluno";
-import RotinaController from "./controller/rotina/rotina";
 import CategoriaController from "./controller/categoria/categoria";
 import { loginController } from "./controller/login/loginController";
 import EmailController from "./controller/email/emailController";
@@ -23,7 +22,7 @@ router.get('/ConsultarPersonal', new PersonalController().getPersonalTrainers)
 router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
 router.post('/ConsultarPersonalUnico/:id',new PersonalController().consultarUsuariosUnico)
 router.post('/consultarPersonalComAlunoUnico/:personalId/:alunoId/',new PersonalController().consultarPersonalComAlunoUnico)
-router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
+
 router.delete('/ApagarPersonal/:id', new PersonalController().apagarPersonal)
 
 
@@ -47,7 +46,7 @@ router.put('/AlterarDadosCategoria/:id', new CategoriaController().alterarDadosP
 router.delete('/ApagarCategoria/:id', new CategoriaController().apagarPersonal)
 
 router.post('/loginUsuarios', new loginController().loginAluno)
-router.get('/verificaToken/:personalID', new loginController().verificaToken)
+router.get('/verificaToken/:id', new loginController().verificaToken)
 
 router.post("/esqueci-senha", new EmailController().sendResetPasswordEmail);
 router.put("/resetar-senha/:token", new AlunoController().resetPassword);

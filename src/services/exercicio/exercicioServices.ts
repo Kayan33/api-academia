@@ -64,7 +64,13 @@ class ExercicioServices {
         },
         include:{
           categoria:{
-            
+            include:{
+              exercicios:{
+                include:{
+                  
+                }
+              }
+            }
           }
         },
       });
