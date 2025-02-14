@@ -66,7 +66,7 @@ class EmailService {
     }
 
     const token = this.generateResetToken(resetUser.id);
-    const resetLink = `http://localhost:3000/Troca-senha/${token}`;
+    const resetLink = `https://sistema-treinos.vercel.app/Troca-senha/${token}`;
 
     const emailContent = `
       <p>Olá,</p>

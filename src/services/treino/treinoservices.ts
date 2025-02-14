@@ -72,6 +72,20 @@ class TreinoServices {
     })
     return ver
   }
+
+  async DeleteTreino (id:string){
+
+    try {
+      
+      await prismaClient.treino.delete({
+       where:{id},
+     })
+     return { dados: "Treino apagado com sucesso" };
+    } catch (error) {
+      console.error("Erro ao apagar Treino:", error);
+      throw new Error("Erro ao apagar Treino.");
+    }
+  }
 }
 
 export default TreinoServices;

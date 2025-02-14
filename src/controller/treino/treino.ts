@@ -3,8 +3,8 @@ import TreinoServices from "../../services/treino/treinoservices";
 
 class TreinoController {
   async cadastro_Treino(req: Request, res: Response) {
-    const { alunoID, personalID, } = req.params; // O alunoID vem dos parâmetros da URL
-    const { nome_treino, AlunoExercicio, } = req.body; // Dados do treino no corpo da requisição
+    const { alunoID, personalID, } = req.params; 
+    const { nome_treino, AlunoExercicio, } = req.body; 
 
     const treinoServices = new TreinoServices();
 
@@ -16,7 +16,7 @@ class TreinoController {
         alunoID: [alunoID],
       });
 
-      return res.json(resposta); // Retorna a resposta para o cliente
+      return res.json(resposta); 
     } catch (error: any) {
       return res.status(500).json({ message: "Erro ao cadastrar treino", error: error.message });
     }
@@ -34,6 +34,18 @@ class TreinoController {
 
     try {
       const resposta = await treinoServices.consultartreinolUnico({id})
+      return res.json(resposta)
+    } catch (error: any) {
+      return res.status(500).json({ message: "Erro ao consultar treino", error: error.message });
+    }
+  }
+
+  async DeleteTreino (req: Request, res: Response){
+    const {id} = req.params
+    const treinoServices = new TreinoServices()
+
+    try {
+      const resposta = await treinoServices.DeleteTreino(id)
       return res.json(resposta)
     } catch (error: any) {
       return res.status(500).json({ message: "Erro ao consultar treino", error: error.message });

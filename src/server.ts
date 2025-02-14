@@ -37,6 +37,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     });
 });
  
-//app.listen(7777, () => console.log("Rodando no http://localhost:7777/"));
+//  app.listen(7777, () => console.log("Rodando no http://localhost:7777/"));
  
-https.createServer(options, app).listen(3000, () => console.log('Servidor OnLine'))
+ https.createServer(options, app).listen(21065, () => console.log('Servidor OnLine'))
