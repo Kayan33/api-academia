@@ -42,6 +42,7 @@ router.delete('/ApagarExercicios/:id', new ExercicioController().apagarExercicio
 
 router.post('/CadastrarCategoria', new CategoriaController().cadastro_Categoria)
 router.get('/ConsultarTodosCategoria', new CategoriaController().getCadastro)
+router.get('/ConsultarCategoriaPorPersonal/:personalID/:categoriaID', new CategoriaController().getCategoriaByPersonalAnd);
 router.post('/ConsultarCategoriaUnico/:id', new CategoriaController().consultarCategoriaUnico)
 router.put('/AlterarDadosCategoria/:id', new CategoriaController().alterarDadosPersonal)
 router.delete('/ApagarCategoria/:id', new CategoriaController().apagarPersonal)

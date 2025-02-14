@@ -61,17 +61,21 @@ class TreinoServices {
     const ver =  await prismaClient.treino.findUnique({
       where: { id},
 
-      include:{
-        aluno:true,
-        AlunoExercicio:{
-          include:{
-            exercicio:true
+      include: {
+        AlunoExercicio: {
+          include: {
+            exercicio: {
+              include:{
+                categoria:true
+              }
+            }  
           }
-        }
-      }
+        },
+      },
     })
     return ver
   }
+
 
   async DeleteTreino (id:string){
 

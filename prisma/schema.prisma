@@ -53,6 +53,7 @@ model Treino {
   personalID      String
   aluno           Aluno[]       @relation("AlunoTreino")
   AlunoExercicio  AlunoExercicio[] 
+  @@map("Treino")
 }
 
 model AlunoExercicio {
@@ -63,6 +64,7 @@ model AlunoExercicio {
   exercicio   Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
   treinos     Treino?   @relation(fields: [treinosID], references: [id]) // Relacionamento opcional
   treinosID   String?   // Tornando o campo opcional
+  @@map("AlunoExercicio")
 }
 
 

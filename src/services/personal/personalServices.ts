@@ -51,7 +51,7 @@ class PersonalServices {
 
   // ERRO AO BUSCAR COM findFirst PELO FRONT
   async consultarPersonalUnico(id: string) {
-    const resposta = await prismaClient.personal.findMany({
+    const resposta = await prismaClient.personal.findUnique({
       where: {
         id: id
       },

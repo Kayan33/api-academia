@@ -60,6 +60,43 @@ class CategoriaServices {
         }
     }
 
+
+    async getCategoriabyPersonalAnd(personalID: string, categoriaID: string) {
+        try {
+          
+          const exercicios = await prismaClient.categoria.findMany({
+            where: {
+              id: categoriaID,
+                exercicios: {
+                some: {
+                    alunoExercicios: {
+                        some:{
+                            treinos:{
+                                personalID: personalID,
+                            }
+                        }
+                  },
+                },
+              },
+            },
+            include:{
+                exercicios:{
+
+                }
+            }
+          });
+
+          
+    
+          return exercicios;
+        } catch (error) {
+          console.error("Erro ao buscar exercícios do personal na categoria:", error);
+          throw new Error("Erro ao buscar exercícios do personal na categoria.");
+        }
+      }
+      
+      
+
     async alterarDadosCategoria({ categoria, id }: CategoriaAltera) {
         try {
             await prismaClient.categoria.update({
