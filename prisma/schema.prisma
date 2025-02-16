@@ -40,6 +40,7 @@ model Personal {
   senha     String
   aluno     Aluno[]
   treino    Treino[]
+  exercicio Exercicio[]
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
 
@@ -75,9 +76,12 @@ model Exercicio {
   alunoExercicios AlunoExercicio[]
   categoria       Categoria        @relation(fields: [categoriaID], references: [id], onDelete: Cascade)
   categoriaID     String
+  personal        Personal         @relation(fields: [personalID], references: [id])
+  personalID      String
 
   @@map("exercicio")
 }
+
 
 model Categoria {
   id         String      @id @default(uuid())
