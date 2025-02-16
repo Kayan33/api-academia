@@ -20,24 +20,52 @@ interface AlterarAlunoDePersonal {
 class PersonalServices {
   async cadastrar_personal({ nome, telefone, email, CREF, sexo, senha, aluno }: Personal) {
 
+    const  RegistroEmail = await prismaClient.personal.findFirst({
+      where:{
+      OR:[{email},{CREF}]  
+      }
+    })
+
+    
+if (RegistroEmail) {
+  
+  if (RegistroEmail.email === email) {
+    throw new Error("Este email já está cadastrado. Tente outro.");
+    
+  }
+  if (RegistroEmail.CREF === CREF) {
+    throw new Error("Está CREEF já está cadastrado.");
+    
+  }
+}
+
 
     const senhaCrypt = await hash(senha, 8)
-    const cadastrar = await prismaClient.personal.create({
-      data: {
-        nome,
-        telefone,
-        email,
-        CREF,
-        sexo,
-        senha: senhaCrypt,
 
-        aluno: aluno.length > 0 ? { connect: aluno.map(id => ({ id })) } : undefined,
-      },
-      include: {
-        aluno: true,
-      },
-    });
-    return cadastrar;
+    try {
+      const cadastrar = await prismaClient.personal.create({
+        data: {
+          nome,
+          telefone,
+          email,
+          CREF,
+          sexo,
+          senha: senhaCrypt,
+  
+          aluno: aluno.length > 0 ? { connect: aluno.map(id => ({ id })) } : undefined,
+        },
+        include: {
+          aluno: true,
+        },
+      });
+      return cadastrar;
+    } catch (error) {
+      console.log(error);
+      
+      throw new Error("Erro a Cadastrar Usuario");
+      
+    }
+    
   }
 
   async getAllPersonalTrainers() {
