@@ -39,26 +39,6 @@ class CategoriaController {
     }
   }
 
-  async getCategoriaByPersonalAnd(req: Request, res: Response) {
-    try {
-      const { personalID, categoriaID } = req.params;
-      const exercicioServices = new CategoriaServices();
-
-      const resposta =
-        await exercicioServices.getCategoriabyPersonalAnd(
-          personalID,
-          categoriaID
-        );
-
-      return res.json(resposta);
-    } catch (error) {
-      console.error("Erro ao buscar exercícios:", error);
-
-      return res
-        .status(500)
-        .json({ error: "Erro ao buscar exercícios do personal na categoria." });
-    }
-  }
 
   async alterarDadosPersonal(req: Request, res: Response) {
     try {
