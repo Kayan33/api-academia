@@ -275,14 +275,16 @@
                 "properties": {
                   "nome_exercicio": { "type": "string" },
                   "URL_video": { "type": "string" },
-                  "categoriaID": { "type": "string" }
+                  "categoriaID": { "type": "string" },
+                  "personalID": { "type": "string" }
                 },
-                "required": ["nome_exercicio", "URL_video", "categoriaID"]
+                "required": ["nome_exercicio", "URL_video", "categoriaID", "personalID"]
               },
               "example": {
                 "nome_exercicio": "Supino Reto",
                 "URL_video": "https://exemplo.com/video-supino",
-                "categoriaID": "ID Categoria aqui"
+                "categoriaID": "ID Categoria aqui",
+                "personalID": "ID Personal aqui"
               }
             }
           }
@@ -395,6 +397,74 @@
         }
       }
     },
+    
+    
+      "/ConsultapersonalExerciciosCategoria/{categoriaID}/{personalID}": {
+        "post": {
+          "summary": "Consultar Exercícios por Categoria e Personal",
+          "tags": ["Exercícios"],
+          "parameters": [
+            {
+              "name": "categoriaID",
+              "in": "path",
+              "required": true,
+              "description": "ID da categoria do exercício a ser consultado.",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "personalID",
+              "in": "path",
+              "required": true,
+              "description": "ID do personal responsável pelo exercício.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Exercícios encontrados com sucesso.",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "id": "exercicio-uuid",
+                      "nome_exercicio": "Supino Reto",
+                      "URL_video": "https://exemplo.com/video-supino",
+                      "categoria": {
+                        "categoria": "Peitoral"
+                      }
+                    },
+                    {
+                      "id": "exercicio-uuid-2",
+                      "nome_exercicio": "Agachamento",
+                      "URL_video": "https://exemplo.com/video-agachamento",
+                      "categoria": {
+                        "categoria": "Pernas"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "404": {
+              "description": "Nenhum exercício encontrado para essa categoria e personal.",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Nenhum exercício encontrado para a categoria e personal fornecidos."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    
+    
+
     "/AlterarDadosExercicios/{id}": {
       "put": {
         "summary": "Alterar Dados do Exercício",
