@@ -4,12 +4,13 @@ import ExercicioServices from "../../services/exercicio/exercicioServices";
 class ExercicioController {
   async cadastro_Exercicio(req: Request, res: Response) {
     try {
-      const { nome_exercicio, URL_video, categoriaID } = req.body;
+      const { nome_exercicio, URL_video, categoriaID, personalID } = req.body;
       const exercicioServices = new ExercicioServices();
       const resposta = await exercicioServices.cadastrar_exercicios({
         nome_exercicio,
         URL_video,
         categoriaID,
+        personalID,
       });
       return res.json(resposta);
     } catch (error) {
@@ -39,6 +40,18 @@ class ExercicioController {
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Erro ao consultar exercicios." });
+    }
+  }
+
+  async ConsultapersonalExerciciosCategoria(req: Request, res: Response) {
+    try {
+      const {categoriaID, personalID}= req.params
+      const exercicioServices = new ExercicioServices();
+      const resposta = await exercicioServices.personalExerciciosCategoria(categoriaID,personalID)
+      return res.json(resposta)
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao buscar exercicios." });
     }
   }
 

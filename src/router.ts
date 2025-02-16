@@ -8,6 +8,7 @@ import { loginController } from "./controller/login/loginController";
 import EmailController from "./controller/email/emailController";
 import RotinaExercicioController from "./controller/rotina/rotina";
 import { estaAutenticado } from "./middleware/estaAutenticado";
+import ExercicioServices from "./services/exercicio/exercicioServices";
 
 const router = Router()
 
@@ -37,12 +38,12 @@ router.put('/AlterarotinaExercicio/:id', new RotinaExercicioController().altera_
 router.post('/CadastrarExercicios', new ExercicioController().cadastro_Exercicio)
 router.get('/ConsultarTodosExercicios', new ExercicioController().getExercicios)
 router.post('/ConsultarExerciciosUnico/:id', new ExercicioController().consultarExerciciosUnico)
+router.post('/ConsultapersonalExerciciosCategoria/:categoriaID/:personalID', new ExercicioController().ConsultapersonalExerciciosCategoria)
 router.put('/AlterarDadosExercicios/:id', new ExercicioController().alterarDadosExercicios)
 router.delete('/ApagarExercicios/:id', new ExercicioController().apagarExercicios)
 
 router.post('/CadastrarCategoria', new CategoriaController().cadastro_Categoria)
 router.get('/ConsultarTodosCategoria', new CategoriaController().getCadastro)
-router.get('/ConsultarCategoriaPorPersonal/:personalID/:categoriaID', new CategoriaController().getCategoriaByPersonalAnd);
 router.post('/ConsultarCategoriaUnico/:id', new CategoriaController().consultarCategoriaUnico)
 router.put('/AlterarDadosCategoria/:id', new CategoriaController().alterarDadosPersonal)
 router.delete('/ApagarCategoria/:id', new CategoriaController().apagarPersonal)
