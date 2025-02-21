@@ -8,7 +8,7 @@ import { loginController } from "./controller/login/loginController";
 import EmailController from "./controller/email/emailController";
 import RotinaExercicioController from "./controller/rotina/rotina";
 import { estaAutenticado } from "./middleware/estaAutenticado";
-import ExercicioServices from "./services/exercicio/exercicioServices";
+import ConviteController from "./controller/convite/conviteController";
 
 const router = Router()
 
@@ -20,7 +20,6 @@ router.delete('/ApagarAluno/:id', new AlunoController().apagarUsuarios)
 
 router.post('/CadastrarPersonal', new PersonalController().cadastro_Personal)
 router.get('/ConsultarPersonal', new PersonalController().getPersonalTrainers)
-router.put('/AlterarDadosPersonal/:id', new PersonalController().alterarDadosPersonal)
 router.post('/ConsultarPersonalUnico/:id',new PersonalController().consultarUsuariosUnico)
 router.post('/consultarPersonalComAlunoUnico/:personalId/:alunoId/',new PersonalController().consultarPersonalComAlunoUnico)
 
@@ -48,6 +47,11 @@ router.get('/ConsultarTodosCategoria', new CategoriaController().getCadastro)
 router.post('/ConsultarCategoriaUnico/:id', new CategoriaController().consultarCategoriaUnico)
 router.put('/AlterarDadosCategoria/:id', new CategoriaController().alterarDadosPersonal)
 router.delete('/ApagarCategoria/:id', new CategoriaController().apagarPersonal)
+
+router.post('/EnviaConvite', new ConviteController().EnviarConvie)
+router.get('/ListaConvite/:alunoID', new ConviteController().ListaConvitesPendentes)
+router.put('/Convite/aceita/:id', new ConviteController().AceitaConvite)
+router.put('/Convite/rejeita/:id', new ConviteController().RejeitarConvite)
 
 router.post('/loginUsuarios', new loginController().loginAluno)
 router.post('/loginPersonal', new loginController().loginPersonal)

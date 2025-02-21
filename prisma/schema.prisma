@@ -22,6 +22,7 @@ model Aluno {
   endereco        String
   data_nascimento String
   senha           String
+  convite Convite []
   data_inscricao  DateTime         @default(now())
   personal        Personal?        @relation(fields: [personalID], references: [id])
   personalID      String?
@@ -29,6 +30,24 @@ model Aluno {
 
   @@map("aluno")
 }
+
+model Convite {
+  id    String  @id @default(uuid())
+  personal Personal @relation(fields: [personalID], references: [id], onDelete: Cascade)
+  personalID String
+  aluno Aluno @relation(fields: [alunoID], references: [id], onDelete: Cascade)
+  alunoID String
+  status StatusConvite @default(PENDENTE)
+  @@map("convite")
+}
+
+enum StatusConvite{
+  PENDENTE
+  ACEITO
+  REJEITADO
+}
+
+
 
 model Personal {
   id        String    @id @default(uuid())
@@ -38,6 +57,7 @@ model Personal {
   CREF      String    @unique
   sexo      String
   senha     String
+  convite Convite []
   aluno     Aluno[]
   treino    Treino[]
   exercicio Exercicio[]

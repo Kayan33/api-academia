@@ -108,6 +108,7 @@ class AlunoServises {
     });
     return { data: "Alterado com Sucesso" };
   }
+  
 
   async apagarAlunos(id: string) {
     await prismaClient.aluno.delete({
