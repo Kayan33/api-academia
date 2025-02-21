@@ -76,8 +76,8 @@ model Exercicio {
   alunoExercicios AlunoExercicio[]
   categoria       Categoria        @relation(fields: [categoriaID], references: [id], onDelete: Cascade)
   categoriaID     String
-  personal        Personal         @relation(fields: [personalID], references: [id])
-  personalID      String
+  personal        Personal?         @relation(fields: [personalID], references: [id])
+  personalID      String?
 
   @@map("exercicio")
 }

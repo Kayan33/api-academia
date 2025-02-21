@@ -6,6 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
+    
     "/CadastrarCategoria": {
       "post": {
         "summary": "Cadastrar uma nova categoria de treino",
@@ -262,7 +263,9 @@
           }
         }
       }
-    }, "/CadastrarExercicios": {
+    },
+    
+    "/CadastrarExercicios": {
       "post": {
         "summary": "Cadastrar Exercício",
         "tags": ["Exercícios"],
@@ -397,8 +400,6 @@
         }
       }
     },
-    
-    
       "/ConsultapersonalExerciciosCategoria/{categoriaID}/{personalID}": {
         "post": {
           "summary": "Consultar Exercícios por Categoria e Personal",
@@ -462,9 +463,6 @@
           }
         }
       },
-    
-    
-
     "/AlterarDadosExercicios/{id}": {
       "put": {
         "summary": "Alterar Dados do Exercício",
@@ -555,7 +553,299 @@
           }
         }
       }
+    },
+
+
+    
+      "/treino/{alunoID}/{personalID}": {
+        "post": {
+          "summary": "Cadastrar um treino para o aluno com o personal",
+          "tags": ["Treinos"],
+          "parameters": [
+            {
+              "name": "alunoID",
+              "in": "path",
+              "required": true,
+              "description": "ID do aluno que está recebendo o treino",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "personalID",
+              "in": "path",
+              "required": true,
+              "description": "ID do personal trainer que está criando o treino",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nome_treino": {
+                      "type": "string",
+                      "description": "Nome do treino"
+                    },
+                    "AlunoExercicio": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "ID do exercício do aluno"
+                      },
+                      "description": "Lista de exercícios associados ao treino"
+                    }
+                  },
+                  "required": ["nome_treino", "AlunoExercicio"],
+                  "example": {
+                    "nome_treino": "Treino de Força",
+                    "AlunoExercicio": ["1", "2", "3"]
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Treino cadastrado com sucesso",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": "abc123",
+                    "nome_treino": "Treino de Força",
+                    "AlunoExercicio": [
+                      {
+                        "id": "1",
+                        "exercicio": {
+                          "nome": "Agachamento",
+                          "descricao": "Exercício de agachamento"
+                        }
+                      },
+                      {
+                        "id": "2",
+                        "exercicio": {
+                          "nome": "Supino",
+                          "descricao": "Exercício de supino"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Erro ao cadastrar treino, dados inválidos",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Dados inválidos para o cadastro do treino"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erro interno ao cadastrar o treino",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Erro ao cadastrar treino",
+                    "error": "Descrição do erro"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    
+    
+
+"/rotinaExercicio/{treinosID}": {
+  "post": {
+    "summary": "Cadastrar Exercício",
+    "tags": ["Exercícios com Aluno"],
+    "parameters": [
+      {
+        "name": "treinosID",
+        "in": "path",
+        "required": true,
+        "description": "ID do treino.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "repeticoes": { "type": "number" },
+              "descanso": { "type": "number" },
+              "exercicioID": { "type": "string" }
+            },
+            "required": ["repeticoes", "descanso", "exercicioID"]
+          },
+          "example": {
+            "repeticoes": 8,
+            "descanso": 30,
+            "exercicioID": "ID de exercicio"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Exercício cadastrado com sucesso.",
+        "content": {
+          "application/json": {
+            "example": {
+              "id": "67890",
+              "repeticoes": 8,
+              "descanso": 30,
+              "exercicioID": "ID de exercicio",
+              "categoria": {
+                "categoria": "Peitoral"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Erro ao cadastrar exercício.",
+        "content": {
+          "application/json": {
+            "example": {
+              "message": "Erro ao cadastrar rotinaExercicio de treino."
+            }
+          }
+        }
+      }
     }
+  }
+},
+"/AlterarotinaExercicio/{id}": {
+    "put": {
+      "summary": "Alterar dados do exercício de rotina",
+      "tags": ["Exercícios com Aluno"],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID do exercício a ser alterado",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repeticoes": {
+                  "type": "number",
+                  "description": "Número de repetições"
+                },
+                "descanso": {
+                  "type": "number",
+                  "description": "Tempo de descanso em segundos"
+                }
+              },
+              "required": ["repeticoes", "descanso"],
+              "example": {
+                "repeticoes": 8,
+                "descanso": 30
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Alteração realizada com sucesso",
+          "content": {
+            "application/json": {
+              "example": {
+                "dados": "Alteração efetuada com sucesso"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Erro ao alterar dados do exercício",
+          "content": {
+            "application/json": {
+              "example": {
+                "message": "Erro ao alterar dados do exercício."
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Exercício não encontrado",
+          "content": {
+            "application/json": {
+              "example": {
+                "message": "Exercício não encontrado."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+"/ApagarExerciciosComAluno/{id}": {
+  "delete": {
+    "summary": "Deletar Exercício do Aluno",
+    "tags": ["Exercícios com Aluno"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "ID do exercício a ser deletado.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Exercício apagado com sucesso.",
+        "content": {
+          "application/json": {
+            "example": {
+              "dados": "Exercício apagado com sucesso"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Erro ao apagar exercício.",
+        "content": {
+          "application/json": {
+            "example": {
+              "message": "Erro ao apagar exercício."
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
   }
 
   

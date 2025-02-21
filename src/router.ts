@@ -34,6 +34,7 @@ router.delete('/ApagarTreino/:id', new TreinoController().DeleteTreino)
 
 router.post('/rotinaExercicio/:treinosID', new RotinaExercicioController().cadastro_RotinaExercicio)
 router.put('/AlterarotinaExercicio/:id', new RotinaExercicioController().altera_RotinaExercicio)
+router.delete('/ApagarExerciciosComAluno/:id', new RotinaExercicioController().DeleteExerciciosComAluno)
 
 router.post('/CadastrarExercicios', new ExercicioController().cadastro_Exercicio)
 router.get('/ConsultarTodosExercicios', new ExercicioController().getExercicios)
@@ -49,7 +50,9 @@ router.put('/AlterarDadosCategoria/:id', new CategoriaController().alterarDadosP
 router.delete('/ApagarCategoria/:id', new CategoriaController().apagarPersonal)
 
 router.post('/loginUsuarios', new loginController().loginAluno)
-router.get('/verificaToken/:id', new loginController().verificaToken)
+router.post('/loginPersonal', new loginController().loginPersonal)
+router.get('/verificaTokenPersonal/:id', new loginController().verificaTokenPersonal)
+router.get('/verificaTokenAluno/:id', new loginController().verificaTokenAluno)
 
 router.post("/esqueci-senha", new EmailController().sendResetPasswordEmail);
 router.put("/resetar-senha/:token", new AlunoController().resetPassword);

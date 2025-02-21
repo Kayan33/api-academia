@@ -25,11 +25,11 @@ class RotinaExercicioServices {
           
 
           exercicio: { connect: { id: exercicioID } },
-          treinos: { connect: { id: treinosID } }, // Conecta ao treino
+          treinos: { connect: { id: treinosID } }, 
         },
         include: {
-          exercicio: true, // Inclui os exercícios associados à rotinaExercicio
-          treinos: true,   // Inclui os treinos associados
+          exercicio: true,
+          treinos: true,   
         },
       });
       return cadastrar;
@@ -59,6 +59,21 @@ class RotinaExercicioServices {
 
     }
 
+  }
+
+  async apagarExerciciosComAluno (id:string){
+    try {
+      await prismaClient.alunoExercicio.delete({
+        where:{
+          id: id
+        }
+      })
+      return { dados: "Exercício apagado com sucesso" };
+    } catch (err) {
+      console.log(err);
+      throw new Error("Erro ao apagar exercício.");
+      
+    }
   }
 
 

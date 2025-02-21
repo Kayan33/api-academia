@@ -55,25 +55,32 @@ class AlunoServises {
   }
 
   async consultarAlunoUnico(id: string) {
-    const resposta = await prismaClient.aluno.findFirst({
+    const resposta = await prismaClient.aluno.findUnique({
       where: {
         id: id,
       },
       include: {
-        personal: true,
-        treino: {
-          include: {
-            AlunoExercicio: {
-              include: {
-                exercicio: {
-                  include: {
-                    categoria: {},
-                  },
-                },
-              },
-            },
-          },
-        },
+       personal:{
+        include:{
+          treino:{
+            include:{
+              AlunoExercicio:{
+                include:{
+                  exercicio:{
+                    include:{
+                      categoria:{
+                        include:{
+
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+       }
       },
     });
     return resposta;

@@ -25,7 +25,7 @@ class AlunoController {
   }
 
   async consultarUsuariosUnico(req: Request, res: Response) {
-    const { id } = req.body
+    const { id } = req.params
     const enviardadosServices = new AlunoServises()
     const resposta = await enviardadosServices.consultarAlunoUnico(id)
     return res.json(resposta)
