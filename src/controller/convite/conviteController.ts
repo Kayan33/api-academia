@@ -5,10 +5,10 @@ class ConviteController {
 
     async EnviarConvie(req: Request, res: Response){
         try {
-            const{personalID,alunoID}= req.body
+            const{personalID,email}= req.body
             const conviteService = new ConviteService();
 
-            const resposta = await conviteService.EnviarConvie({personalID,alunoID})
+            const resposta = await conviteService.EnviarConvite({personalID,email})
            
             return res.json(resposta)
             

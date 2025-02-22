@@ -60,6 +60,8 @@ class AlunoServises {
         id: id,
       },
       include: {
+        convite:{
+        },
        personal:{
         include:{
           treino:{
