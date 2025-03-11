@@ -26,6 +26,7 @@ model Aluno {
   data_inscricao  DateTime         @default(now())
   personal        Personal?        @relation(fields: [personalID], references: [id])
   personalID      String?
+  HistoricoExercicio          HistoricoExercicio[] 
   treino          Treino[]        @relation("AlunoTreino")
 
   @@map("aluno")
@@ -74,18 +75,35 @@ model Treino {
   personalID      String
   aluno           Aluno[]       @relation("AlunoTreino")
   AlunoExercicio  AlunoExercicio[] 
+  HistoricoExercicio  HistoricoExercicio[] 
   @@map("Treino")
 }
 
 model AlunoExercicio {
-  id          String    @id @default(uuid())
-  exercicioID String
-  repeticoes  Int?
-  descanso    Int?
-  exercicio   Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
-  treinos     Treino?   @relation(fields: [treinosID], references: [id]) // Relacionamento opcional
-  treinosID   String?   // Tornando o campo opcional
+  id             String    @id @default(uuid())
+  exercicioID    String
+  repeticoes     Int?
+  tempoRepeticao Int?     
+  cargaSugerida  Float?   
+  exercicio      Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
+  treinos        Treino?   @relation(fields: [treinosID], references: [id]) 
+  treinosID      String?   
   @@map("AlunoExercicio")
+}
+
+model HistoricoExercicio {
+  id              String    @id @default(uuid())
+  alunoID         String
+  aluno           Aluno     @relation(fields: [alunoID], references: [id], onDelete: Cascade)
+  treinoID        String
+  treino          Treino    @relation(fields: [treinoID], references: [id], onDelete: Cascade)
+  exercicioID     String
+  exercicio       Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
+  carga_utilizada Float?    
+  tempo_execucao  String     
+  data_realizacao DateTime  @default(now()) 
+
+  @@map("historico_exercicio")
 }
 
 
@@ -94,6 +112,7 @@ model Exercicio {
   nome_exercicio  String
   URL_video       String?
   alunoExercicios AlunoExercicio[]
+  HistoricoExercicio HistoricoExercicio[]
   categoria       Categoria        @relation(fields: [categoriaID], references: [id], onDelete: Cascade)
   categoriaID     String
   personal        Personal?         @relation(fields: [personalID], references: [id])

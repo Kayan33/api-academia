@@ -9,6 +9,7 @@ import EmailController from "./controller/email/emailController";
 import RotinaExercicioController from "./controller/rotina/rotina";
 import { estaAutenticado } from "./middleware/estaAutenticado";
 import ConviteController from "./controller/convite/conviteController";
+import HistoricoExercicioController from "./controller/HistoricoExercicio/HistoricoExercicio";
 
 const router = Router()
 
@@ -22,7 +23,6 @@ router.post('/CadastrarPersonal', new PersonalController().cadastro_Personal)
 router.get('/ConsultarPersonal', new PersonalController().getPersonalTrainers)
 router.post('/ConsultarPersonalUnico/:id',new PersonalController().consultarUsuariosUnico)
 router.post('/consultarPersonalComAlunoUnico/:personalId/:alunoId/',new PersonalController().consultarPersonalComAlunoUnico)
-
 router.delete('/ApagarPersonal/:id', new PersonalController().apagarPersonal)
 
 
@@ -52,6 +52,9 @@ router.post('/EnviaConvite', new ConviteController().EnviarConvie)
 router.get('/ListaConvite/:alunoID', new ConviteController().ListaConvitesPendentes)
 router.put('/Convite/aceita/:id', new ConviteController().AceitaConvite)
 router.put('/Convite/rejeita/:id', new ConviteController().RejeitarConvite)
+
+router.post('/HistoricoExercicioServices', new HistoricoExercicioController().cadastrarHistoricoExercicio)
+router.get('/ConsultarHistoricoExercicioComAluno/:alunoID', new HistoricoExercicioController().ConsultarHistoricoExercicioComAluno)
 
 router.post('/loginUsuarios', new loginController().loginAluno)
 router.post('/loginPersonal', new loginController().loginPersonal)
