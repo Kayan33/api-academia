@@ -2,34 +2,42 @@ import prismaClient from "../prisma";
 
 interface RotinaExercicio {
   repeticoes: number;
-  descanso: number;
-  exercicioID: string  // ID dos exercícios a serem associados
-  treinosID: string;      // ID do treino para vincular ao alunoExercicio
+  exercicioID: string;
+  treinosID: string;   
+  tempoRepeticao?: number; 
+  cargaSugerida?: number;     
 }
 
 interface AlteracaoRotinaExercicio {
-  id: string
+  id: string;
   repeticoes: number;
-  descanso: number;
+  tempoRepeticao?: number;
+  tempoDescanso?: number;
+  cargaSugerida?: number;
+  cargaUsada?: number;
 }
 
-
-
 class RotinaExercicioServices {
-  async cadastrarRotinaExercicioServices({ repeticoes, descanso , exercicioID, treinosID }: RotinaExercicio) {
+  
+  async cadastrarRotinaExercicioServices({
+    repeticoes,
+    exercicioID,
+    treinosID,
+    tempoRepeticao,
+    cargaSugerida,
+  }: RotinaExercicio) {
     try {
       const cadastrar = await prismaClient.alunoExercicio.create({
         data: {
           repeticoes,
-          descanso,
-          
-
+          tempoRepeticao,
+          cargaSugerida,
           exercicio: { connect: { id: exercicioID } },
           treinos: { connect: { id: treinosID } }, 
         },
         include: {
           exercicio: true,
-          treinos: true,   
+          treinos: true,
         },
       });
       return cadastrar;
@@ -39,44 +47,42 @@ class RotinaExercicioServices {
     }
   }
 
-  async alterarRotinaExercicioServices({ id, repeticoes, descanso,  }: AlteracaoRotinaExercicio) {
+
+  async alterarRotinaExercicioServices({
+    id,
+    repeticoes,
+    tempoRepeticao,
+    cargaSugerida
+  }: AlteracaoRotinaExercicio) {
     try {
       await prismaClient.alunoExercicio.update({
         where: { id },
         data: {
           repeticoes,
-          descanso,
           
-
+          tempoRepeticao,
+          cargaSugerida,
         },
-
-
-      })
+      });
       return { dados: 'Alteração efetuada com sucesso' };
     } catch (error) {
       console.error("Erro ao alterar dados do exercício:", error);
       throw new Error("Erro ao alterar dados do exercício.");
-
     }
-
   }
 
-  async apagarExerciciosComAluno (id:string){
+
+  async apagarExerciciosComAluno(id: string) {
     try {
       await prismaClient.alunoExercicio.delete({
-        where:{
-          id: id
-        }
-      })
+        where: { id },
+      });
       return { dados: "Exercício apagado com sucesso" };
     } catch (err) {
       console.log(err);
       throw new Error("Erro ao apagar exercício.");
-      
     }
   }
-
-
 }
 
 export default RotinaExercicioServices;

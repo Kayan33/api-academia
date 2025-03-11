@@ -6,7 +6,574 @@
     "version": "1.0.0"
   },
   "paths": {
-    
+    "/CadastrarAluno": {
+      "post": {
+        "summary": "Cadastrar um novo aluno",
+        "description": "Cria um novo aluno no sistema com os dados fornecidos.",
+        "operationId": "cadastroAluno",
+        "tags": ["Aluno"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "description": "Nome completo do aluno"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "description": "Número de telefone do aluno"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "E-mail do aluno"
+                  },
+                  "endereco": {
+                    "type": "string",
+                    "description": "Endereço do aluno"
+                  },
+                  "data_nascimento": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Data de nascimento do aluno"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "description": "Senha do aluno"
+                  }
+                },
+                "required": [
+                  "nome",
+                  "telefone",
+                  "email",
+                  "endereco",
+                  "data_nascimento",
+                  "senha"
+                ]
+              },
+              "example": {
+                "nome": "João da Silva",
+                "telefone": "(11) 99999-9999",
+                "email": "joao.silva@gmail.com",
+                "endereco": "Rua das Flores, 123, São Paulo, SP",
+                "data_nascimento": "1990-05-15",
+                "senha": "senha123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Aluno cadastrado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "dados": "Cadastro Efetuado com Sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "erro": "Dados inválidos fornecidos"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "erro": "Erro ao cadastrar aluno"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Consultaraluno": {
+      "get": {
+        "summary": "Consultar todos os alunos",
+        "description": "Retorna a lista de todos os alunos cadastrados, incluindo informações do personal responsável.",
+        "operationId": "getAllAluno",
+        "tags": ["Aluno"],
+        "responses": {
+          "200": {
+            "description": "Lista de alunos retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "ID único do aluno"
+                      },
+                      "nome": {
+                        "type": "string",
+                        "description": "Nome do aluno"
+                      },
+                      "telefone": {
+                        "type": "string",
+                        "description": "Telefone do aluno"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "E-mail do aluno"
+                      },
+                      "endereco": {
+                        "type": "string",
+                        "description": "Endereço do aluno"
+                      },
+                      "data_nascimento": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Data de nascimento do aluno"
+                      },
+                      "personalID": {
+                        "type": "string",
+                        "description": "ID do personal responsável pelo aluno"
+                      },
+                      "personal": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID do personal"
+                          },
+                          "nome": {
+                            "type": "string",
+                            "description": "Nome do personal"
+                          },
+                          "telefone": {
+                            "type": "string",
+                            "description": "Telefone do personal"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "E-mail do personal"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "6b18d126-2279-4668-8fec-b7dfd96e8593",
+                    "nome": "João da Silva",
+                    "telefone": "(11) 99999-9999",
+                    "email": "joao.silva@gmail.com",
+                    "endereco": "Rua das Flores, 123, São Paulo, SP",
+                    "data_nascimento": "1990-05-15",
+                    "personalID": "2d6da876-36be-49fd-81dc-cd2e01e69c7b",
+                    "personal": {
+                      "id": "2d6da876-36be-49fd-81dc-cd2e01e69c7b",
+                      "nome": "Carlos Pereira",
+                      "telefone": "(11) 98888-8888",
+                      "email": "carlos.pereira@gmail.com"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao consultar alunos.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "erro": "Erro ao consultar alunos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+    "/CadastrarPersonal": {
+      "post": {
+        "summary": "Cadastrar um novo personal",
+        "operationId": "cadastro_Personal",
+        "tags": ["Personal"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string",
+                    "description": "Nome completo do personal"
+                  },
+                  "telefone": {
+                    "type": "string",
+                    "description": "Número de telefone do personal"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email do personal"
+                  },
+                  "CREF": {
+                    "type": "string",
+                    "description": "Número do CREF do personal"
+                  },
+                  "sexo": {
+                    "type": "string",
+                    "description": "Sexo do personal"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "description": "Senha para o cadastro"
+                  },
+                  "aluno": {
+                    "type": "array",
+                    "description": "IDs dos alunos a serem associados ao personal",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "nome": "João da Silva",
+                  "telefone": "11987654321",
+                  "email": "joao.silva@email.com",
+                  "CREF": "123456",
+                  "sexo": "M",
+                  "senha": "joao123",
+                  "aluno": []
+                },
+                "required": ["nome", "telefone", "email", "CREF", "sexo", "senha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Personal cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "12345",
+                  "nome": "João da Silva",
+                  "telefone": "11987654321",
+                  "email": "joao.silva@email.com",
+                  "CREF": "123456",
+                  "sexo": "M",
+                  "aluno": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação, e-mail ou CREF já cadastrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Este email já está cadastrado. Tente outro."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao cadastrar o personal: <detalhes do erro>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/ConsultarPersonal": {
+      "get": {
+        "summary": "Consultar todos os personal trainers",
+        "operationId": "getPersonalTrainers",
+        "tags": ["Personal"],
+        "responses": {
+          "200": {
+            "description": "Lista de todos os personal trainers",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "12345",
+                    "nome": "João da Silva",
+                    "telefone": "11987654321",
+                    "email": "joao.silva@email.com",
+                    "CREF": "123456",
+                    "sexo": "M",
+                    "aluno": [
+                      {
+                        "nome": "joao teste",
+                        "telefone": "11999999999",
+                        "email": "joaoteste@gmail.com",
+                        "endereco": "Rua das Flores, 123",
+                        "data_nascimento": "1990-05-15"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao consultar personal trainers: <detalhes do erro>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/ConsultarPersonalUnico/{id}": {
+      "post": {
+        "summary": "Consultar um personal trainer específico",
+        "operationId": "consultarUsuariosUnico",
+        "tags": ["Personal"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "12345"
+            },
+            "description": "ID do personal trainer a ser consultado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informações do personal trainer",
+            "content": {
+              "application/json": {
+                "example":
+                {
+                  "id": "2ddwdw6da876-36be-49fd-8vew1dc-cd2e0dwdwd1e69c7b",
+                  "nome": "João da Silva",
+                  "telefone": "(99)99999-999",
+                  "email": "joao.silva@email.com",
+                  "CREF": "teste",
+                  "sexo": "teste",
+                  "aluno": [
+                    {
+                      "id": "6b18233d126-2dwd279-46fe628-8fec-b7dfdwdqd96e8593",
+                      "nome": "joao teste",
+                      "telefone": "11999999999",
+                      "email": "joaoteste@gmail.com",
+                      "endereco": "Rua das Flores, 123",
+                      "data_nascimento": "1990-05-15",
+                      "senha": "$2a$08$A3ipUrWqDWLSUlI7t5O5RerId3bYXn6.yQ6ftvDEbFsaELJnVJeGW",
+                      "data_inscricao": "2025-02-22T19:14:01.622Z",
+                      "personalID": "2d6da8f76-36be-49fxzced-81ecdc-cd2e0156hcee69c7b"
+                    }
+                  ],
+                  "treino": [
+                    {
+                      "id": "c75b8fe2ae5-b87b-4fewf89f-87f2-99be233q24f2c17bf",
+                      "nome_treino": "Treino A",
+                      "personalID": "34f2-36be-49fd-81dc-cd2e01e69c7b"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Personal trainer não encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Personal trainer não encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao consultar personal trainer: <detalhes do erro>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/consultarPersonalComAlunoUnico/{personalId}/{alunoId}": {
+      "post": {
+        "summary": "Consultar personal trainer com aluno específico",
+        "operationId": "consultarPersonalComAlunoUnico",
+        "tags": ["Personal"],
+        "parameters": [
+          {
+            "name": "personalId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            },
+            "description": "ID do personal trainer"
+          },
+          {
+            "name": "alunoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67890"
+            },
+            "description": "ID do aluno"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados do personal e aluno encontrados",
+            "content": {
+              "application/json": {
+                "example": 
+                {
+                  "id": "2d6da876-36be-49fd-81dc-cd2e01e69c7b",
+                  "nome": "kayanteste",
+                  "telefone": "(99)99999-999",
+                  "email": "teste@gmail.com",
+                  "CREF": "teste",
+                  "sexo": "teste",
+                  "senha": "$2a$08$O3JSzseUQTF9UDbuANJTfe65opm2r9zu1fehScYqu3J98cKs1m.kK",
+                  "create_at": "2025-02-24T17:12:33.873Z",
+                  "update_at": "2025-02-24T17:12:33.873Z",
+                  "aluno": [
+                    {
+                      "id": "6b18d126-2279-4668-8fec-b7dfd96e8593",
+                      "nome": "joao teste",
+                      "telefone": "11999999999",
+                      "email": "joaoteste@gmail.com",
+                      "endereco": "Rua das Flores, 123",
+                      "data_nascimento": "1990-05-15",
+                      "senha": "$2a$08$A3ipUrWqDWLSUlI7t5O5RerId3bYXn6.yQ6ftvDEbFsaELJnVJeGW",
+                      "data_inscricao": "2025-02-22T19:14:01.622Z",
+                      "personalID": "2d6da876-36be-49fd-81dc-cd2e01e69c7b",
+                      "treino": [
+                        {
+                          "id": "c75b8ae5-b87b-489f-87f2-99b24f2c17bf",
+                          "nome_treino": "Treino A",
+                          "personalID": "2d6da876-36be-49fd-81dc-cd2e01e69c7b",
+                          "AlunoExercicio": [
+                            {
+                              "id": "082d542c-fa95-46b2-80be-69bfad3dee8d",
+                              "exercicioID": "1c714ce4-0b34-4a79-967b-a5e3494e4cc5",
+                              "repeticoes": 5,
+                              "tempoRepeticao": 10,
+                              "tempoDescanso": 30,
+                              "cargaSugerida": 15,
+                              "cargaUsada": null,
+                              "treinosID": "c75b8ae5-b87b-489f-87f2-99b24f2c17bf",
+                              "exercicio": {
+                                "id": "1c714ce4-0b34-4a79-967b-a5e3494e4cc5",
+                                "nome_exercicio": "Barra fixa",
+                                "URL_video": "thg6cGXSlvY",
+                                "categoriaID": "df37c362-c537-4834-8012-9504b8ae0cc1",
+                                "personalID": "2d6da876-36be-49fd-81dc-cd2e01e69c7b",
+                                "categoria": {
+                                  "id": "df37c362-c537-4834-8012-9504b8ae0cc1",
+                                  "categoria": "Peito"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+                
+              }
+            }
+          },
+          "404": {
+            "description": "Personal ou aluno não encontrados",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Personal ou aluno não encontrados"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao buscar personal e aluno"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/ApagarPersonal/{id}": {
+      "delete": {
+        "summary": "Apagar um personal",
+        "description": "Deleta um personal do sistema pelo seu ID.",
+        "operationId": "apagarPersonal",
+        "tags": ["Personal"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do personal que será apagado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Personal apagado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "dados": "Registro Apagado com sucesso"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
     "/CadastrarCategoria": {
       "post": {
         "summary": "Cadastrar uma nova categoria de treino",
@@ -69,7 +636,7 @@
         "summary": "Listar todas as categorias de treino",
         "description": "Esta rota retorna todas as categorias de treino cadastradas.",
         "operationId": "listarCategorias",
-         "tags": ["Categoria"],
+        "tags": ["Categoria"],
         "responses": {
           "200": {
             "description": "Categorias encontradas com sucesso",
@@ -115,7 +682,7 @@
         "summary": "Consultar uma categoria de treino específica",
         "description": "Esta rota consulta uma categoria de treino específica utilizando seu ID.",
         "operationId": "consultarCategoriaUnico",
-         "tags": ["Categoria"],
+        "tags": ["Categoria"],
         "parameters": [
           {
             "name": "id",
@@ -163,7 +730,7 @@
         "summary": "Alterar dados de uma categoria de treino",
         "description": "Esta rota permite alterar os dados de uma categoria de treino existente.",
         "operationId": "alterarDadosCategoria",
-         "tags": ["Categoria"],
+        "tags": ["Categoria"],
         "parameters": [
           {
             "name": "id",
@@ -226,7 +793,7 @@
         "summary": "Apagar uma categoria de treino",
         "description": "Esta rota permite apagar uma categoria de treino existente.",
         "operationId": "apagarCategoria",
-         "tags": ["Categoria"],
+        "tags": ["Categoria"],
         "parameters": [
           {
             "name": "id",
@@ -264,7 +831,7 @@
         }
       }
     },
-    
+
     "/CadastrarExercicios": {
       "post": {
         "summary": "Cadastrar Exercício",
@@ -281,7 +848,12 @@
                   "categoriaID": { "type": "string" },
                   "personalID": { "type": "string" }
                 },
-                "required": ["nome_exercicio", "URL_video", "categoriaID", "personalID"]
+                "required": [
+                  "nome_exercicio",
+                  "URL_video",
+                  "categoriaID",
+                  "personalID"
+                ]
               },
               "example": {
                 "nome_exercicio": "Supino Reto",
@@ -400,69 +972,69 @@
         }
       }
     },
-      "/ConsultapersonalExerciciosCategoria/{categoriaID}/{personalID}": {
-        "post": {
-          "summary": "Consultar Exercícios por Categoria e Personal",
-          "tags": ["Exercícios"],
-          "parameters": [
-            {
-              "name": "categoriaID",
-              "in": "path",
-              "required": true,
-              "description": "ID da categoria do exercício a ser consultado.",
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "personalID",
-              "in": "path",
-              "required": true,
-              "description": "ID do personal responsável pelo exercício.",
-              "schema": {
-                "type": "string"
+    "/ConsultapersonalExerciciosCategoria/{categoriaID}/{personalID}": {
+      "post": {
+        "summary": "Consultar Exercícios por Categoria e Personal",
+        "tags": ["Exercícios"],
+        "parameters": [
+          {
+            "name": "categoriaID",
+            "in": "path",
+            "required": true,
+            "description": "ID da categoria do exercício a ser consultado.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "personalID",
+            "in": "path",
+            "required": true,
+            "description": "ID do personal responsável pelo exercício.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercícios encontrados com sucesso.",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "exercicio-uuid",
+                    "nome_exercicio": "Supino Reto",
+                    "URL_video": "https://exemplo.com/video-supino",
+                    "categoria": {
+                      "categoria": "Peitoral"
+                    }
+                  },
+                  {
+                    "id": "exercicio-uuid-2",
+                    "nome_exercicio": "Agachamento",
+                    "URL_video": "https://exemplo.com/video-agachamento",
+                    "categoria": {
+                      "categoria": "Pernas"
+                    }
+                  }
+                ]
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "Exercícios encontrados com sucesso.",
-              "content": {
-                "application/json": {
-                  "example": [
-                    {
-                      "id": "exercicio-uuid",
-                      "nome_exercicio": "Supino Reto",
-                      "URL_video": "https://exemplo.com/video-supino",
-                      "categoria": {
-                        "categoria": "Peitoral"
-                      }
-                    },
-                    {
-                      "id": "exercicio-uuid-2",
-                      "nome_exercicio": "Agachamento",
-                      "URL_video": "https://exemplo.com/video-agachamento",
-                      "categoria": {
-                        "categoria": "Pernas"
-                      }
-                    }
-                  ]
-                }
-              }
-            },
-            "404": {
-              "description": "Nenhum exercício encontrado para essa categoria e personal.",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "message": "Nenhum exercício encontrado para a categoria e personal fornecidos."
-                  }
+          },
+          "404": {
+            "description": "Nenhum exercício encontrado para essa categoria e personal.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Nenhum exercício encontrado para a categoria e personal fornecidos."
                 }
               }
             }
           }
         }
-      },
+      }
+    },
     "/AlterarDadosExercicios/{id}": {
       "put": {
         "summary": "Alterar Dados do Exercício",
@@ -555,298 +1127,916 @@
       }
     },
 
-
-    
-      "/treino/{alunoID}/{personalID}": {
-        "post": {
-          "summary": "Cadastrar um treino para o aluno com o personal",
-          "tags": ["Treinos"],
-          "parameters": [
-            {
-              "name": "alunoID",
-              "in": "path",
-              "required": true,
-              "description": "ID do aluno que está recebendo o treino",
+    "/treino/{alunoID}/{personalID}": {
+      "post": {
+        "summary": "Cadastrar um treino para o aluno com o personal",
+        "tags": ["Treinos"],
+        "parameters": [
+          {
+            "name": "alunoID",
+            "in": "path",
+            "required": true,
+            "description": "ID do aluno que está recebendo o treino",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "personalID",
+            "in": "path",
+            "required": true,
+            "description": "ID do personal trainer que está criando o treino",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "personalID",
-              "in": "path",
-              "required": true,
-              "description": "ID do personal trainer que está criando o treino",
-              "schema": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                  "nome_treino": {
+                    "type": "string",
+                    "description": "Nome do treino"
+                  },
+                  "AlunoExercicio": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "description": "ID do exercício do aluno"
+                    },
+                    "description": "Lista de exercícios associados ao treino"
+                  }
+                },
+                "required": ["nome_treino", "AlunoExercicio"],
+                "example": {
+                  "nome_treino": "Treino de Força",
+                  "AlunoExercicio": ["1", "2", "3"]
+                }
               }
             }
-          ],
-          "requestBody": {
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Treino cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "abc123",
+                  "nome_treino": "Treino de Força",
+                  "AlunoExercicio": [
+                    {
+                      "id": "1",
+                      "exercicio": {
+                        "nome": "Agachamento",
+                        "descricao": "Exercício de agachamento"
+                      }
+                    },
+                    {
+                      "id": "2",
+                      "exercicio": {
+                        "nome": "Supino",
+                        "descricao": "Exercício de supino"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar treino, dados inválidos",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Dados inválidos para o cadastro do treino"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno ao cadastrar o treino",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao cadastrar treino",
+                  "error": "Descrição do erro"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/treino": {
+      "get": {
+        "summary": "Obtém todos os treinos",
+        "description": "Retorna uma lista de treinos cadastrados, incluindo seus exercícios e categorias.",
+        "tags": ["Treinos"],
+        "responses": {
+          "200": {
+            "description": "Lista de treinos retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "64cfaeca-9a82-41fc-8c70-e60f598b8166"
+                      },
+                      "nome_treino": {
+                        "type": "string",
+                        "example": "Treino A"
+                      },
+                      "personalID": {
+                        "type": "string",
+                        "example": "2d6da876-36be-49fd-81dc-cd2e01e69c7b"
+                      },
+                      "AlunoExercicio": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "082d542c-fa95-46b2-80be-69bfad3dee8d"
+                            },
+                            "exercicio": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "example": "1c714ce4-0b34-4a79-967b-a5e3494e4cc5"
+                                },
+                                "nome_exercicio": {
+                                  "type": "string",
+                                  "example": "Barra fixa"
+                                },
+                                "URL_video": {
+                                  "type": "string",
+                                  "example": "thg6cGXSlvY"
+                                },
+                                "categoria": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "example": "df37c362-c537-4834-8012-9504b8ae0cc1"
+                                    },
+                                    "categoria": {
+                                      "type": "string",
+                                      "example": "Peito"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/consultartreinolUnico/{id}": {
+      "get": {
+        "summary": "Consulta um treino específico",
+        "description": "Retorna os detalhes de um treino específico pelo ID, incluindo exercícios e categorias.",
+        "tags": ["Treinos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do treino a ser consultado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do treino retornados com sucesso.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "nome_treino": {
+                    "id": {
                       "type": "string",
-                      "description": "Nome do treino"
+                      "example": "c75b8ae5-b87b-489f-87f2-99b24f2c17bf"
+                    },
+                    "nome_treino": { "type": "string", "example": "Treino A" },
+                    "personalID": {
+                      "type": "string",
+                      "example": "2d6da876-36be-49fd-81dc-cd2e01e69c7b"
                     },
                     "AlunoExercicio": {
                       "type": "array",
                       "items": {
-                        "type": "string",
-                        "description": "ID do exercício do aluno"
-                      },
-                      "description": "Lista de exercícios associados ao treino"
-                    }
-                  },
-                  "required": ["nome_treino", "AlunoExercicio"],
-                  "example": {
-                    "nome_treino": "Treino de Força",
-                    "AlunoExercicio": ["1", "2", "3"]
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Treino cadastrado com sucesso",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "id": "abc123",
-                    "nome_treino": "Treino de Força",
-                    "AlunoExercicio": [
-                      {
-                        "id": "1",
-                        "exercicio": {
-                          "nome": "Agachamento",
-                          "descricao": "Exercício de agachamento"
-                        }
-                      },
-                      {
-                        "id": "2",
-                        "exercicio": {
-                          "nome": "Supino",
-                          "descricao": "Exercício de supino"
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "082d542c-fa95-46b2-80be-69bfad3dee8d"
+                          },
+                          "exercicio": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "example": "1c714ce4-0b34-4a79-967b-a5e3494e4cc5"
+                              },
+                              "nome_exercicio": {
+                                "type": "string",
+                                "example": "Barra fixa"
+                              },
+                              "URL_video": {
+                                "type": "string",
+                                "example": "thg6cGXSlvY"
+                              },
+                              "categoria": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "example": "df37c362-c537-4834-8012-9504b8ae0cc1"
+                                  },
+                                  "categoria": {
+                                    "type": "string",
+                                    "example": "Peito"
+                                  }
+                                }
+                              }
+                            }
+                          }
                         }
                       }
-                    ]
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Erro ao cadastrar treino, dados inválidos",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "message": "Dados inválidos para o cadastro do treino"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Erro interno ao cadastrar o treino",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "message": "Erro ao cadastrar treino",
-                    "error": "Descrição do erro"
+                    }
                   }
                 }
               }
             }
-          }
-        }
-      },
-    
-    
-
-"/rotinaExercicio/{treinosID}": {
-  "post": {
-    "summary": "Cadastrar Exercício",
-    "tags": ["Exercícios com Aluno"],
-    "parameters": [
-      {
-        "name": "treinosID",
-        "in": "path",
-        "required": true,
-        "description": "ID do treino.",
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "repeticoes": { "type": "number" },
-              "descanso": { "type": "number" },
-              "exercicioID": { "type": "string" }
-            },
-            "required": ["repeticoes", "descanso", "exercicioID"]
           },
-          "example": {
-            "repeticoes": 8,
-            "descanso": 30,
-            "exercicioID": "ID de exercicio"
+          "500": {
+            "description": "Erro ao consultar treino."
           }
         }
       }
     },
-    "responses": {
-      "200": {
-        "description": "Exercício cadastrado com sucesso.",
-        "content": {
-          "application/json": {
-            "example": {
-              "id": "67890",
-              "repeticoes": 8,
-              "descanso": 30,
-              "exercicioID": "ID de exercicio",
-              "categoria": {
-                "categoria": "Peitoral"
-              }
-            }
-          }
-        }
-      },
-      "400": {
-        "description": "Erro ao cadastrar exercício.",
-        "content": {
-          "application/json": {
-            "example": {
-              "message": "Erro ao cadastrar rotinaExercicio de treino."
-            }
-          }
-        }
-      }
-    }
-  }
-},
-"/AlterarotinaExercicio/{id}": {
-    "put": {
-      "summary": "Alterar dados do exercício de rotina",
-      "tags": ["Exercícios com Aluno"],
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "description": "ID do exercício a ser alterado",
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "requestBody": {
-        "required": true,
-        "content": {
-          "application/json": {
+    "/ApagarTreino/{id}": {
+      "delete": {
+        "summary": "Apaga um treino específico",
+        "description": "Deleta um treino pelo ID fornecido.",
+        "tags": ["Treinos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "repeticoes": {
-                  "type": "number",
-                  "description": "Número de repetições"
-                },
-                "descanso": {
-                  "type": "number",
-                  "description": "Tempo de descanso em segundos"
+              "type": "string"
+            },
+            "description": "ID do treino a ser apagado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Treino apagado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dados": {
+                      "type": "string",
+                      "example": "Treino apagado com sucesso"
+                    }
+                  }
                 }
-              },
-              "required": ["repeticoes", "descanso"],
-              "example": {
-                "repeticoes": 8,
-                "descanso": 30
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao apagar treino."
+          }
+        }
+      }
+    },
+
+
+    "/rotinaExercicio/{treinosID}": {
+      "post": {
+        "summary": "Cadastrar Exercício",
+        "tags": ["Exercícios com Aluno"],
+        "parameters": [
+          {
+            "name": "treinosID",
+            "in": "path",
+            "required": true,
+            "description": "ID do treino.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repeticoes": {
+                    "type": "number"
+                  },
+                  "descanso": {
+                    "type": "number"
+                  },
+                  "exercicioID": {
+                    "type": "string"
+                  },
+                  "tempoRepeticao": {
+                    "type": "number",
+                    "description": "Tempo de repetição do exercício em segundos."
+                  },
+                  "tempoDescanso": {
+                    "type": "number",
+                    "description": "Tempo de descanso entre as repetições em segundos."
+                  },
+                  "cargaSugerida": {
+                    "type": "number",
+                    "description": "Carga sugerida para o exercício."
+                  },
+                  "cargaUsada": {
+                    "type": "number",
+                    "description": "Carga realmente utilizada no exercício."
+                  }
+                },
+                "required": ["repeticoes", "descanso", "exercicioID"],
+                "example": {
+                  "repeticoes": 8,
+                  "descanso": 30,
+                  "exercicioID": "ID de exercicio",
+                  "tempoRepeticao": 60,
+                  "tempoDescanso": 30,
+                  "cargaSugerida": 50,
+                  "cargaUsada": 45
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Exercício cadastrado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "67890",
+                  "repeticoes": 8,
+                  "descanso": 30,
+                  "exercicioID": "ID de exercicio",
+                  "categoria": {
+                    "categoria": "Peitoral"
+                  },
+                  "tempoRepeticao": 60,
+                  "tempoDescanso": 30,
+                  "cargaSugerida": 50,
+                  "cargaUsada": 45
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar exercício.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao cadastrar rotinaExercicio de treino."
+                }
               }
             }
           }
         }
-      },
-      "responses": {
-        "200": {
-          "description": "Alteração realizada com sucesso",
+      }
+    },
+    "/AlterarotinaExercicio/{id}": {
+      "put": {
+        "summary": "Alterar dados do exercício de rotina",
+        "tags": ["Exercícios com Aluno"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do exercício a ser alterado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
-              "example": {
-                "dados": "Alteração efetuada com sucesso"
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repeticoes": {
+                    "type": "number",
+                    "description": "Número de repetições."
+                  },
+                  "descanso": {
+                    "type": "number",
+                    "description": "Tempo de descanso em segundos."
+                  },
+                  "tempoRepeticao": {
+                    "type": "number",
+                    "description": "Tempo de repetição do exercício em segundos."
+                  },
+                  "tempoDescanso": {
+                    "type": "number",
+                    "description": "Tempo de descanso entre as repetições em segundos."
+                  },
+                  "cargaSugerida": {
+                    "type": "number",
+                    "description": "Carga sugerida para o exercício."
+                  },
+                  "cargaUsada": {
+                    "type": "number",
+                    "description": "Carga realmente utilizada no exercício."
+                  }
+                },
+                "required": ["repeticoes", "descanso"],
+                "example": {
+                  "repeticoes": 8,
+                  "descanso": 30,
+                  "tempoRepeticao": 60,
+                  "tempoDescanso": 30,
+                  "cargaSugerida": 50,
+                  "cargaUsada": 45
+                }
               }
             }
           }
         },
-        "400": {
-          "description": "Erro ao alterar dados do exercício",
+        "responses": {
+          "200": {
+            "description": "Alteração realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "dados": "Alteração efetuada com sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao alterar dados do exercício.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao alterar dados do exercício."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercício não encontrado.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Exercício não encontrado."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ApagarExerciciosComAluno/{id}": {
+      "delete": {
+        "summary": "Deletar Exercício do Aluno",
+        "tags": ["Exercícios com Aluno"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do exercício a ser deletado.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercício apagado com sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "dados": "Exercício apagado com sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao apagar exercício.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao apagar exercício."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/HistoricoExercicioServices": {
+      "post": {
+        "summary": "Cadastra um novo histórico de exercício",
+        "description": "Recebe os dados do exercício realizado por um aluno e armazena no banco de dados.",
+        "tags": ["Histórico de Exercício"],
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
-              "example": {
-                "message": "Erro ao alterar dados do exercício."
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "alunoID": {
+                    "type": "string",
+                    "example": "1"
+                  },
+                  "treinoID": {
+                    "type": "string",
+                    "example":" 2"
+                  },
+                  "exercicioID": {
+                    "type": "string",
+                    "example": "3"
+                  },
+                  "carga_utilizada": {
+                    "type": "number",
+                    "example": 50.5
+                  },
+                  "tempo_execucao": {
+                    "type": "string",
+                    "example": "00:30:00"
+                  }
+                },
+                "required": ["alunoID", "treinoID", "exercicioID", "carga_utilizada", "tempo_execucao"]
               }
             }
           }
         },
-        "404": {
-          "description": "Exercício não encontrado",
+        "responses": {
+          "200": {
+            "description": "Histórico cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dados": {
+                      "type": "string",
+                      "example": "Historico realizado com Sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar o histórico",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Erro ao cadastrar histórico de treino!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/ConsultarHistoricoExercicioComAluno/{alunoID}": {
+      "get": {
+        "summary": "Consultar Histórico de Exercício do Aluno",
+        "description": "Esse endpoint permite consultar o histórico de exercícios realizados por um aluno específico.",
+        "tags": ["Histórico de Exercício"],
+        "parameters": [
+          {
+            "name": "alunoID",
+            "in": "path",
+            "required": true,
+            "description": "ID do aluno para consultar seu histórico de exercícios",
+            "schema": {
+              "type": "string",
+              "example": "ID do aluno"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Histórico de exercícios do aluno encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "1",
+                    "alunoID": "6b18d126-2279-4668-8fec-b7dfd96e8593",
+                    "treinoID": "c75b8ae5-b87b-489f-87f2-99b24f2c17bf",
+                    "exercicioID": "1c714ce4-0b34-4a79-967b-a5e3494e4cc5",
+                    "carga_utilizada": 50.5,
+                    "tempo_execucao": "00:30:00",
+                    "aluno": {
+                      "id": "6b18d126-2279-4668-8fec-b7dfd96e8593",
+                      "nome": "João Silva"
+                    },
+                    "treino": {
+                      "id": "c75b8ae5-b87b-489f-87f2-99b24f2c17bf",
+                      "nome": "Treino A"
+                    },
+                    "exercicio": {
+                      "id": "1c714ce4-0b34-4a79-967b-a5e3494e4cc5",
+                      "nome": "Supino"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação ou dados faltando",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao consultar Histórico de Exercícios"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao consultar Histórico de Exercícios"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/EnviaConvite": {
+      "post": {
+        "summary": "Envia um convite para um aluno",
+        "description": "Permite que um personal envie um convite para um aluno se associar a ele.",
+        "tags": ["Convite"],
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
-              "example": {
-                "message": "Exercício não encontrado."
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "personalID": {
+                    "type": "string",
+                    "description": "ID do personal que está enviando o convite"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "E-mail do aluno que receberá o convite"
+                  }
+                },
+                "required": ["personalID", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Convite enviado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dados": { "type": "string", "example": "Convite enviado com sucesso" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação ou convite já existente.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro de validação ou convite já existente."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao enviar convite.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao enviar convite."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ListaConvite/{alunoID}": {
+      "get": {
+        "summary": "Listar convites pendentes de um aluno",
+        "operationId": "ListaConvitesPendentes",
+        "tags": ["Convite"],
+        "parameters": [
+          {
+            "name": "alunoID",
+            "in": "path",
+            "required": true,
+            "description": "ID do aluno",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de convites pendentes",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "alunoID": "aluno123",
+                    "personalID": null,
+                    "status": "PENDENTE",
+                    "personal": {
+                      "id": 1,
+                      "nome": "Personal Example"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação, aluno não encontrado ou outro erro relacionado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Aluno Não Encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao ver convites: <detalhes do erro>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Convite/aceita/{id}": {
+      "put": {
+        "summary": "Aceitar um convite",
+        "operationId": "AceitaConvite",
+        "tags": ["Convite"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do convite a ser aceito",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Convite aceito com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "dados": "Convite aceito com sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação, convite não encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Convite não encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao aceitar convite: <detalhes do erro>"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Convite/rejeita/{id}": {
+      "put": {
+        "summary": "Rejeitar um convite",
+        "operationId": "RejeitarConvite",
+        "tags": ["Convite"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do convite a ser rejeitado",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Convite rejeitado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "dados": "Convite Rejeitado com sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação, convite não encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Convite não encontrado"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Erro ao rejeitar convite: <detalhes do erro>"
+                }
               }
             }
           }
         }
       }
     }
-  },
-"/ApagarExerciciosComAluno/{id}": {
-  "delete": {
-    "summary": "Deletar Exercício do Aluno",
-    "tags": ["Exercícios com Aluno"],
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "description": "ID do exercício a ser deletado.",
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "Exercício apagado com sucesso.",
-        "content": {
-          "application/json": {
-            "example": {
-              "dados": "Exercício apagado com sucesso"
-            }
-          }
-        }
-      },
-      "400": {
-        "description": "Erro ao apagar exercício.",
-        "content": {
-          "application/json": {
-            "example": {
-              "message": "Erro ao apagar exercício."
-            }
-          }
-        }
-      }
-    }
   }
-}
-
-
-  }
-
-  
 }
