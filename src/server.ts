@@ -6,15 +6,6 @@ import cors from 'cors';
 import router from './router';
 import swaggerUi from "swagger-ui-express";
 import swaggerDoc from "./swagger.json"
-import * as https from 'https';
-import * as fs from 'fs';
-import path from 'path';
-
-const options = {
-    key: fs.readFileSync(path.resolve(__dirname, '..',  'cert/certificadokey.key')),
-    cert: fs.readFileSync(path.resolve(__dirname, '..', 'cert/certificadocert.crt')),
-    ca: fs.readFileSync(path.resolve(__dirname, '..', 'cert/ca.crt')),
-}
 
 const app = express();
 
@@ -37,6 +28,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     });
 });
  
-   //  app.listen(7777, () => console.log("Rodando no http://localhost:7777/"));
+     app.listen(7777, () => console.log("Rodando no http://localhost:7777/"));
  
-https.createServer(options, app).listen(21065, () => console.log('Servidor OnLine'))
