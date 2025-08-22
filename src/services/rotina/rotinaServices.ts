@@ -5,7 +5,6 @@ interface RotinaExercicio {
   exercicioID: string;
   treinosID: string;   
   tempoRepeticao?: number; 
-  descanso?: number; // Adicionando descanso como opcional
   cargaSugerida?: number;     
 }
 
@@ -25,7 +24,6 @@ class RotinaExercicioServices {
     exercicioID,
     treinosID,
     tempoRepeticao,
-    descanso,
     cargaSugerida,
   }: RotinaExercicio) {
     try {
@@ -33,7 +31,6 @@ class RotinaExercicioServices {
         data: {
           repeticoes,
           tempoRepeticao,
-          descanso,
           cargaSugerida,
           exercicio: { connect: { id: exercicioID } },
           treinos: { connect: { id: treinosID } }, 
