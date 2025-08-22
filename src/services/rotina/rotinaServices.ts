@@ -42,7 +42,7 @@ class RotinaExercicioServices {
       });
       return cadastrar;
     } catch (error) {
-      console.error("Erro ao cadastrar rotinaExercicio de treino para o aluno:", error);
+      console.log(error);
       throw new Error("Erro ao cadastrar rotinaExercicio de treino.");
     }
   }
