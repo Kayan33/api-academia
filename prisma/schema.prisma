@@ -87,6 +87,7 @@ model AlunoExercicio {
   exercicioID    String
   repeticoes     Int?
   tempoRepeticao Int?     
+  descanso        Int?
   cargaSugerida  Float?   
   exercicio      Exercicio @relation(fields: [exercicioID], references: [id], onDelete: Cascade)
   treinos        Treino?   @relation(fields: [treinosID], references: [id]) 
